@@ -2,6 +2,11 @@
 require_once('config.php');
 use cruds\User;
 
+use modules\auth\User as Auth;
+$auth = new Auth($db);
+
+$auth->validate();
+
 $crud = new User($db);
 
 $events=$crud->read_events();

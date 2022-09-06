@@ -21,4 +21,12 @@ class User{
             return false;
         }
     }
+
+    public function validate()
+    {
+        if(!isset($_SESSION['user']['id'])){
+            header("Location: http://" . $_SERVER['HTTP_HOST'] . "/auth/login/index.php");
+            exit();
+        }
+    }
 }
