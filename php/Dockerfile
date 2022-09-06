@@ -6,3 +6,4 @@ RUN curl -sSL https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhs
   && chmod +x mhsendmail \
   && mv mhsendmail /usr/local/bin/mhsendmail
 COPY ./php.ini /usr/local/etc/php/
+COPY --from=composer /usr/bin/composer /usr/bin/composer
