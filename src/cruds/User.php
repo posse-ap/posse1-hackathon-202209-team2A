@@ -23,4 +23,11 @@ class User
         $events = $stmt->fetchAll();
         return $events;
     }
+    public function get_user($email)
+    {
+        $stmt = $this->db->prepare('SELECT * FROM users WHERE users.email=:email');
+        $stmt->bindValue(':email', $email, \PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 }
