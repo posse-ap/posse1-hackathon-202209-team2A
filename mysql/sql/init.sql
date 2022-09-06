@@ -102,3 +102,5 @@ INSERT INTO event_attendance SET event_id=18, user_id=3, is_attendance=true;
 INSERT INTO admins SET username='古屋美羽', email='miuhuruya@admin.com', hashed_password=SHA2('huruya',224);
 INSERT INTO admins SET username='松本透歩', email='yukihomatumoto@admin.com', hashed_password=SHA2('matumoto',224);
 INSERT INTO admins SET username='遠藤愛期', email='manakiendou@admin.com', hashed_password=SHA2('endou',224);
+
+-- sqlで参加者表示
