@@ -16,7 +16,7 @@ class User
     public function read_events()
     {
 
-        $stmt = $this->db->query("SELECT events.id event_id, events.name, events.start_at, events.end_at,
+        $stmt = $this->db->query("SELECT events.id, events.name, events.start_at, events.end_at,
         count(event_attendance.id) AS total_participants FROM events
         LEFT JOIN event_attendance ON events.id = event_attendance.event_id
         where end_at > now() GROUP BY events.id
@@ -76,15 +76,15 @@ class User
     {
         $stmt = $this->db->prepare
         ("SELECT * FROM events WHERE id NOT IN(
-        SELECT event_id FROM event_attendance 
+        SELECT event_id FROM event_attendance
         WHERE user_id = :user_id)
         and end_at > now()
-        ");       
+        ");
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $unanswered_events = $stmt->fetchAll();
         return $unanswered_events;
-    }    
+    }
     public function update_user_password($email, $new_password)
     {
         $stmt = $this->db->prepare('UPDATE users SET hashed_password = :hashed_password

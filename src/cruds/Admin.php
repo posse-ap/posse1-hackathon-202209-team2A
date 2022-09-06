@@ -12,6 +12,15 @@ class Admin
         $this->db = $db;
     }
 
+    public function create_event($name, $start_at, $end_at)
+    {
+        $stmt = $this->db->prepare('INSERT INTO events (name, start_at, end_at) VALUES (:name, :start_at, :end_at)');
+        $stmt->bindValue(':name', $name, \PDO::PARAM_STR);
+        $stmt->bindValue(':start_at', $start_at, \PDO::PARAM_STR);
+        $stmt->bindValue(':end_at', $end_at, \PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
     public function get_user($email)
     {
         $stmt = $this->db->prepare('SELECT * FROM admins WHERE admins.email=:email');
