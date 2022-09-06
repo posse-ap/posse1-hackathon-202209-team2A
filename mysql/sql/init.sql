@@ -2,12 +2,23 @@ DROP SCHEMA IF EXISTS posse;
 CREATE SCHEMA posse;
 USE posse;
 
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  email UNIQUE VARCHAR(255) NOT NULL,
+  hashed_password VARCHAR(255) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 DROP TABLE IF EXISTS events;
 CREATE TABLE events (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  name VARCHAR(10) NOT NULL,
-  start_at DATETIME,
-  end_at DATETIME,
+  name VARCHAR(255) NOT NULL,
+  detail VARCHAR(255),
+  start_at DATETIME NOT NULL,
+  end_at DATETIME NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted_at DATETIME
@@ -17,11 +28,32 @@ DROP TABLE IF EXISTS event_attendance;
 CREATE TABLE event_attendance (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   event_id INT NOT NULL,
-  user_id INT,
+  user_id INT NOT NULL,
+  is_attendance BOOLEAN NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  deleted_at DATETIME
+  deleted_at DATETIME,
+  FOREIGN KEY fk_event_id(event_id)
+  REFERENCES events(id),
+  FOREIGN KEY fk_user_id(user_id)
+  REFERENCES users(id)
 );
+
+DROP TABLE IF EXISTS admins;
+CREATE TABLE admins (
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  hashed_password VARCHAR(255) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+INSERT INTO users SET username='武田龍一', email='ryuichitakeda@posse.com', hashed_password=SHA2('takeda',224);
+INSERT INTO users SET username='福場脩真', email='shumafukuba@posse.com', hashed_password=SHA2('fukuba',224);
+INSERT INTO users SET username='古屋美羽', email='miuhuruya@posse.com', hashed_password=SHA2('huruya',224);
+INSERT INTO users SET username='中澤和貴', email='kazukinakazawa@posse.com', hashed_password=SHA2('nakazawa',224);
 
 
 INSERT INTO events SET name='縦モク', start_at='2021/08/01 21:00', end_at='2021/08/01 23:00';
@@ -39,10 +71,5 @@ INSERT INTO events SET name='スペモク', start_at='2021/08/24 20:00', end_at=
 INSERT INTO events SET name='遊び', start_at='2021/09/22 18:00', end_at='2021/09/22 22:00';
 INSERT INTO events SET name='ハッカソン', start_at='2021/09/03 10:00', end_at='2021/09/03 22:00';
 INSERT INTO events SET name='遊び', start_at='2021/09/06 18:00', end_at='2021/09/06 22:00';
+INSERT INTO events SET name='スペモク', start_at='2021/08/24 20:00', end_at='2021/08/24 22:00';
 
-INSERT INTO event_attendance SET event_id=1;
-INSERT INTO event_attendance SET event_id=1;
-INSERT INTO event_attendance SET event_id=1;
-INSERT INTO event_attendance SET event_id=2;
-INSERT INTO event_attendance SET event_id=2;
-INSERT INTO event_attendance SET event_id=3;
