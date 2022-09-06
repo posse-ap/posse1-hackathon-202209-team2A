@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
-  email UNIQUE VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
   hashed_password VARCHAR(255) NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -73,3 +73,32 @@ INSERT INTO events SET name='ハッカソン', start_at='2021/09/03 10:00', end_
 INSERT INTO events SET name='遊び', start_at='2021/09/06 18:00', end_at='2021/09/06 22:00';
 INSERT INTO events SET name='スペモク', start_at='2021/08/24 20:00', end_at='2021/08/24 22:00';
 
+-- id17~未来のイベント
+INSERT INTO events SET name='運動会', start_at='2022/10/15 10:00', end_at='2022/10/15 19:00';
+INSERT INTO events SET name='ハロウィン', start_at='2022/10/31 10:00', end_at='2022/10/31 22:00';
+INSERT INTO events SET name='クリスマス', start_at='2022/12/24 18:00', end_at='2022/12/24 22:00';
+INSERT INTO events SET name='冬のDX', start_at='2022/12/28 20:00', end_at='2022/12/28 22:00';
+
+
+INSERT INTO event_attendance SET event_id=1, user_id=1, is_attendance=true;
+INSERT INTO event_attendance SET event_id=1, user_id=2, is_attendance=true;
+INSERT INTO event_attendance SET event_id=1, user_id=3, is_attendance=true;
+INSERT INTO event_attendance SET event_id=1, user_id=4, is_attendance=false;
+
+INSERT INTO event_attendance SET event_id=2, user_id=1, is_attendance=true;
+INSERT INTO event_attendance SET event_id=2, user_id=2, is_attendance=false;
+INSERT INTO event_attendance SET event_id=2, user_id=3, is_attendance=false;
+INSERT INTO event_attendance SET event_id=17, user_id=1, is_attendance=true;
+INSERT INTO event_attendance SET event_id=17, user_id=2, is_attendance=true;
+INSERT INTO event_attendance SET event_id=17, user_id=3, is_attendance=false;
+INSERT INTO event_attendance SET event_id=17, user_id=4, is_attendance=false;
+INSERT INTO event_attendance SET event_id=18, user_id=1, is_attendance=true;
+INSERT INTO event_attendance SET event_id=18, user_id=2, is_attendance=true;
+INSERT INTO event_attendance SET event_id=18, user_id=3, is_attendance=true;
+
+
+
+
+INSERT INTO admins SET username='古屋美羽', email='miuhuruya@admin.com', hashed_password=SHA2('huruya',224);
+INSERT INTO admins SET username='松本透歩', email='yukihomatumoto@admin.com', hashed_password=SHA2('matumoto',224);
+INSERT INTO admins SET username='遠藤愛期', email='manakiendou@admin.com', hashed_password=SHA2('endou',224);
