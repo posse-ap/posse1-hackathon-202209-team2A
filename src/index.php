@@ -79,7 +79,7 @@ function get_day_of_week ($w) {
                   <p class="text-sm font-bold text-gray-300">不参加</p>
                   -->
                 <?php else : ?>
-                  <!--
+<!--                   
                   <p class="text-sm font-bold text-green-400">参加</p>
                   -->
                 <?php endif; ?>
