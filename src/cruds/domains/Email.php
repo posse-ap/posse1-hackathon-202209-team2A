@@ -8,7 +8,7 @@
 
 class Email
 {
-  public function mail_send($to) {
+  public function send_mail($to) {
     $subject = "イベント前日通知";
     $body = "本文";
     $headers = ["From"=>"system@posse-ap.com", "Content-Type"=>"text/plain; charset=UTF-8", "Content-Transfer-Encoding"=>"8bit"];
@@ -22,9 +22,14 @@ class Email
     
     http://localhost/auth/login
     EOT;
-    
+
+
+    if (){
     mb_send_mail($to, $subject, $body, $headers);
     echo "メールを送信しました";
+  }else{
+    
+  }
   }
   
 }

@@ -1,10 +1,27 @@
 <?php
 require_once('config.php');
+use cruds\User;
 
-$stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id');
-$events = $stmt->fetchAll();
+use modules\auth\User as Auth;
+$auth = new Auth($db);
 
-function get_day_of_week ($w) {
+$auth->validate();
+$user_id = $_SESSION['user']['id'];
+
+$crud = new User($db);
+
+$events=$crud->read_events();
+
+if (isset($_GET['attendance_id'])) {
+  $attendance_id = $_GET['attendance_id'];
+}
+if ($attendance_id == 1) {
+  $is_attendance = true;
+  $events = $crud->read_attendance_events($user_id, $is_attendance);
+}
+
+function get_day_of_week($w)
+{
   $day_of_week_list = ['日', '月', '火', '水', '木', '金', '土'];
   return $day_of_week_list["$w"];
 }
@@ -27,27 +44,25 @@ function get_day_of_week ($w) {
       <div class="h-full">
         <img src="img/header-logo.png" alt="" class="h-full">
       </div>
-      <!--
+
       <div>
-        <a href="/auth/login" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">ログイン</a>
+        <a href="/auth/password_reset" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">password reset</a>
       </div>
-      -->
+
     </div>
   </header>
 
   <main class="bg-gray-100">
     <div class="w-full mx-auto p-5">
-      <!--
       <div id="filter" class="mb-8">
         <h2 class="text-sm font-bold mb-3">フィルター</h2>
-        <div class="flex">
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white">全て</a>
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">参加</a>
+        <div id="attendance_button_container" class="flex">
+          <a href="index.php" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">全て</a>
+          <a href="index.php?attendance_id=1" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">参加</a>
           <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">不参加</a>
           <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a>
         </div>
       </div>
-      -->
       <div id="events-list">
         <div class="flex justify-between items-center mb-3">
           <h2 class="text-sm font-bold">一覧</h2>
@@ -79,12 +94,15 @@ function get_day_of_week ($w) {
                   <p class="text-sm font-bold text-gray-300">不参加</p>
                   -->
                 <?php else : ?>
-                  <!--
+<!--
                   <p class="text-sm font-bold text-green-400">参加</p>
                   -->
                 <?php endif; ?>
               </div>
-              <p class="text-sm"><span class="text-xl"><?php echo $event['total_participants']; ?></span>人参加 ></p>
+              <p class="text-sm"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
+              <?php foreach($event['attendance_users'] as $attendance):  ?>
+                <div><?=$attendance['username']?></div>
+              <?php endforeach ?>
             </div>
           </div>
         <?php endforeach; ?>
@@ -110,6 +128,24 @@ function get_day_of_week ($w) {
   </div>
 
   <script src="/js/main.js"></script>
+  <script>
+    const attendance_buttons = document.querySelectorAll('#attendance_button_container>a');
+
+    function changedButtonColor(attendance_id) {
+      attendance_buttons[attendance_id].classList.add('bg-blue-600');
+      attendance_buttons[attendance_id].classList.add('text-white');
+
+    }
+  </script>
+  <?php if ($attendance_id == 1) { ?>
+    <script>
+      changedButtonColor(1);
+    </script>;
+  <?php } else { ?>
+    <script>
+      changedButtonColor(0);
+    </script>;
+  <?php }; ?>
 </body>
 
 </html>

@@ -5,6 +5,8 @@ define('DB_PASS', getenv('MYSQL_PASSWORD'));
 define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST']);
 
 require_once(dirname(__FILE__) . '/database/Database.php');
+session_start();
+
 use database\Database;
 
 // クラスを自動ロードする関数
