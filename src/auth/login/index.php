@@ -24,13 +24,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 ?>
 
-<?php
-$cruds = new Notification($db);
-$notifications = $cruds->before_attendance_event();
- var_dump($notifications) ;
-
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
 

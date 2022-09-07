@@ -7,12 +7,12 @@ use cruds\Notification;
 
 $mail = new Email;
 $crud = new Notification($db);
-$before_attendance_users = $crud -> before_attendance_user();
+$get_all_users = $crud -> get_all_user();
 $before_attendance_events = $crud -> before_attendance_event();
 // var_dump($before_attendance_event);
 $to = "";
-foreach($before_attendance_users as $before_attendance_user) {
-  $to .= $before_attendance_user['email'] . ",";
+foreach($get_all_users as $get_all_user) {
+  $to .= $get_all_user['email'] . ",";
 };
 foreach($before_attendance_events as $before_attendance_event) {
   $event = $before_attendance_event['name'];

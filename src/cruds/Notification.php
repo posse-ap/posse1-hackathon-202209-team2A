@@ -12,7 +12,7 @@ class Notification
     $this->db = $db;
   }
 
-  public function before_attendance_user() {
+  public function get_all_user() {
     $stmt = $this->db ->prepare("SELECT email FROM users");
     $stmt -> execute();
     return $stmt -> fetchAll();
