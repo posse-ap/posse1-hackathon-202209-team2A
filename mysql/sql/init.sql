@@ -54,6 +54,7 @@ INSERT INTO users SET username='武田龍一', email='ryuichitakeda@posse.com', 
 INSERT INTO users SET username='福場脩真', email='shumafukuba@posse.com', hashed_password=SHA1('fukuba');
 INSERT INTO users SET username='古屋美羽', email='miuhuruya@posse.com', hashed_password=SHA1('huruya');
 INSERT INTO users SET username='中澤和貴', email='kazukinakazawa@posse.com', hashed_password=SHA1('nakazawa');
+INSERT INTO users SET username='林千翼子', email='chiyokohayashi@posse.com', hashed_password=SHA1('hayashi');
 
 
 INSERT INTO events SET name='縦モク', start_at='2021/08/01 21:00', end_at='2021/08/01 23:00';
