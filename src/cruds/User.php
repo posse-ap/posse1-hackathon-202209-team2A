@@ -8,7 +8,7 @@ use PDO;
 class User
 {
     protected $db;
-    public function __construct(\PDO $db)
+    public function __construct(PDO $db)
     {
         $this->db = $db;
     }
