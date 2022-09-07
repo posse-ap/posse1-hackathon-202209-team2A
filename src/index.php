@@ -44,11 +44,11 @@ function get_day_of_week($w)
       <div class="h-full">
         <img src="img/header-logo.png" alt="" class="h-full">
       </div>
-      <!--
+
       <div>
-        <a href="/auth/login" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">ログイン</a>
+        <a href="/auth/password_reset" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">password reset</a>
       </div>
-      -->
+
     </div>
   </header>
 

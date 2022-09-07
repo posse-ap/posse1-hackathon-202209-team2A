@@ -72,4 +72,14 @@ class User
         $attendant_events = $stmt->fetchAll();
         return $attendant_events;
     }
+
+    public function update_user_password($email, $new_password)
+    {
+        $stmt = $this->db->prepare('UPDATE users SET hashed_password = :hashed_password
+        WHERE email = :email');
+        $hashed_password = sha1($new_password);
+        $stmt->bindValue(':hashed_password', $hashed_password, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
 }
