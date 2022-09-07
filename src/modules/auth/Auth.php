@@ -16,7 +16,7 @@ class Auth
         $user = $this->cruds->get_user($email);
         $user_password = $user['hashed_password'];
         if(sha1($password) === $user_password){
-            $this->session= $user['id'];
+            $_SESSION[$this->session]['id'] = $user['id'];
             return true;
         }else{
             return false;
