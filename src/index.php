@@ -2,6 +2,7 @@
 require_once('config.php');
 use cruds\User as Cruds;
 use modules\auth\User as Auth;
+use modules\Utils;
 
 $auth = new Auth($db);
 
@@ -21,11 +22,7 @@ if (isset($_GET['is_answered'])) {
   $events = $crud->read_unanswered_events($user_id, $is_attendance);
 }
 
-function get_day_of_week($w)
-{
-  $day_of_week_list = ['日', '月', '火', '水', '木', '金', '土'];
-  return $day_of_week_list["$w"];
-}
+
 
 include dirname(__FILE__) . '/component/header.php';
 ?>
@@ -66,7 +63,7 @@ include dirname(__FILE__) . '/component/header.php';
           <?php
           $start_date = strtotime($event['start_at']);
           $end_date = strtotime($event['end_at']);
-          $day_of_week = get_day_of_week(date("w", $start_date));
+          $day_of_week = Utils::get_day_of_week(date("w", $start_date));
           ?>
           <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>">
             <div>
@@ -104,7 +101,7 @@ include dirname(__FILE__) . '/component/header.php';
     </div>
 
 
-    
+
   <!-- ページネーション -->
   <!-- This example requires Tailwind CSS v2.0+ -->
   <div class="flex items-center justify-items-center px-4 py-3 sm:px-6">
