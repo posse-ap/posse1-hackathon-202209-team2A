@@ -2,7 +2,6 @@
 
 
 namespace cruds;
-use schemas\User as CreateUserSchema;
 
 
 class Admin
@@ -21,12 +20,9 @@ class Admin
         return $stmt->fetch();
     }
 
-    public function create_use(CreateUserSchema $user)
+    public function create_user($username, $email, $password)
     {
-        $email = $user->email();
-        $hashed_password = $user->hashed_password();
-        $username = $user->username();
-
+        $hashed_password = sha1($password);
         $stmt = $this->db->prepare("INSERT INTO users
         (email, hashed_password, username)
         VALUES
