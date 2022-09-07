@@ -106,7 +106,7 @@ $event = $crud->get_event($event_id);
                         <label>開始時刻：<input type="datetime-local" name="start_at" value="<?= $event['start_at'] ?>"></label>
                         <br>
                         <label>終了時刻：<input type="datetime-local" name="end_at" value="<?= $event['end_at'] ?>"></label>
-                        <textarea name="detail" id="" cols="30" rows="10" class="w-full p-4 text-sm mb-3" placeholder="イベント内容"></textarea>
+                        <textarea name="detail" id="" cols="30" rows="10" class="w-full p-4 text-sm mb-3" placeholder="イベント内容"><?= $event['detail'] ?></textarea>
                         <input type="submit" value="変更" class="cursor-pointer w-full p-3 text-md text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300">
                     </div>
                 </form>
