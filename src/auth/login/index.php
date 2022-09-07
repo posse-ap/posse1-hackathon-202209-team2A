@@ -1,5 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+
+use cruds\Notification;
 use modules\auth\User as Auth;
 use cruds\User as Cruds;
 
@@ -19,6 +21,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
   }
 }
+
+?>
+
+<?php
+$cruds = new Notification($db);
+$notifications = $cruds->before_attendance_event();
+ var_dump($notifications) ;
 
 ?>
 

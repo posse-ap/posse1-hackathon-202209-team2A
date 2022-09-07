@@ -1,8 +1,8 @@
 <?
-  namespace cruds\domains;
-  require_once('../../config.php');
-  mb_language('ja');
-  mb_internal_encoding('UTF-8');
+namespace cruds\domains;
+require_once('../../config.php');
+mb_language('ja');
+mb_internal_encoding('UTF-8');
 
 
 

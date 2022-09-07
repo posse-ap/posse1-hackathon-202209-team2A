@@ -28,6 +28,7 @@ function get_day_of_week($w)
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="ja">
 
