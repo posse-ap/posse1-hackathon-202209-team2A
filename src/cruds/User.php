@@ -16,13 +16,21 @@ class User
     public function read_events()
     {
 
-        $stmt = $this->db->query("SELECT events.id, events.name, events.start_at, events.end_at,
+        $stmt = $this->db->query("SELECT events.id event_id, events.name, events.start_at, events.end_at,
         count(event_attendance.id) AS total_participants FROM events
         LEFT JOIN event_attendance ON events.id = event_attendance.event_id
         where end_at > now() GROUP BY events.id
         ORDER BY start_at");
-        $events = $stmt->fetchAll();
-        return $events;
+        $num = $stmt->rowCount();
+
+        if ($num > 0) {
+            $events = array();
+            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                $row['attendance_users'] = $this->read_attendances($row['event_id']);
+                array_push($events, $row);
+            }
+            return $events;
+        }
     }
     public function get_user($email)
     {
@@ -32,13 +40,21 @@ class User
         return $stmt->fetch();
     }
 
-    public function read_attendances($event_id)
+    private function read_attendances($event_id)
     {
-        $stmt = $this->db->prepare("SELECT users.name from event_attendance
-        INNER JOIN events ON event_attendance.event_id = events.id
-        INNER JOIN users ON event_attendance.user_id = users.id
-        WHERE events.id = :event_id
+        $stmt = $this->db->prepare("SELECT
+        event_attendance.is_attendance,
+        user.username username
+        from event_attendance
+        INNER JOIN events as event
+            ON event_attendance.event_id = event.id
+        INNER JOIN users as user
+            ON event_attendance.user_id = user.id
+        WHERE event.id = :event_id
         AND event_attendance.is_attendance=TRUE");
+        $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     public function read_attendance_events($user_id,$is_attendance)
