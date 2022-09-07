@@ -17,7 +17,7 @@ if (isset($_GET['attendance_id'])) {
 }
 if ($attendance_id == 1) {
   $is_attendance = true;
-  $events = $crud->attendance_events($user_id, $is_attendance);
+  $events = $crud->read_attendance_events($user_id, $is_attendance);
 }
 
 function get_day_of_week($w)

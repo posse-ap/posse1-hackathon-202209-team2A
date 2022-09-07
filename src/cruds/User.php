@@ -31,7 +31,7 @@ class User
         return $stmt->fetch();
     }
 
-    public function attendance_events($user_id,$is_attendance)
+    public function read_attendance_events($user_id,$is_attendance)
     {
         $stmt = $this->db->prepare("SELECT * FROM events 
         INNER JOIN event_attendance ON events.id = event_attendance.event_id
