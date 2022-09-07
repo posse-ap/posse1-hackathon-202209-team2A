@@ -1,8 +1,6 @@
 <?
   namespace cruds\domains;
   require_once('../../config.php');
-  require_once('../User.php');
-  use cruds\User;
   mb_language('ja');
   mb_internal_encoding('UTF-8');
 
@@ -29,12 +27,4 @@ class Email
     echo "メールを送信しました";
   }
   
-  }
-
-  $mail = new Email;
-  $crud = new User($db);
-  $before_attendance_users = $crud -> before_attendance_user();
-  foreach($before_attendance_users as $before_attendance_user) {
-    $to = $before_attendance_user['email'];
-  };
-  $mail -> mail_send($to);
+}
