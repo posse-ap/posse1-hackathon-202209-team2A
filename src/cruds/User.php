@@ -46,4 +46,17 @@ class User
         $attendant_events = $stmt->fetchAll();
         return $attendant_events;
     }
+
+    public function read_unanswered_events($user_id)
+    {
+        $stmt = $this->db->prepare
+        ("SELECT * FROM events WHERE id NOT IN(
+        SELECT event_id FROM event_attendance 
+        WHERE user_id = 1)
+        ");       
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $unanswered_events = $stmt->fetchAll();
+        return $unanswered_events;
+    }
 }
