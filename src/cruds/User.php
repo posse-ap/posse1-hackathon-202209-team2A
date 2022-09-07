@@ -3,8 +3,6 @@
 
 namespace cruds;
 
-use PDO;
-
 class User
 {
     protected $db;

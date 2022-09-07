@@ -1,7 +1,9 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
-if ($_SERVER['HTTP_METHOD'] === 'POST')
-{
+use cruds\Admin as Cruds;
+
+if ($_SERVER['HTTP_METHOD'] === 'POST') {
     $event_name = $_REQUEST['event_name'];
     $start_at = $_REQUEST['start_at'];
     $end_at = $_REQUEST['end_at'];
@@ -11,17 +13,21 @@ if ($_SERVER['HTTP_METHOD'] === 'POST')
         'start_at' => '',
         'end_at' => '',
     );
-    if (!isset($event_name)){
+    if (!isset($event_name)) {
         $error['event_name'] = 'blank';
     }
-    if (!isset($start_at)){
+    if (!isset($start_at)) {
         $error['start_at'] = 'blank';
     }
-    if (!isset($end_at)){
+    if (!isset($end_at)) {
         $error['end_at'] = 'blank';
     }
     if (empty($error)) {
-        
+        $cruds = new Cruds($db);
+        if ($cruds->create_event($event_name, $start_at, $end_at, $detail)) {
+            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php');
+            exit();
+        }
     }
 }
 ?>
@@ -37,10 +43,27 @@ if ($_SERVER['HTTP_METHOD'] === 'POST')
 
 <body>
     <form action="" method="post">
-        <input type="text" name="event_name" placeholder="イベント名">
-        <input type="text" name='start_at'>
-        <input type="text" name="end_at">
-        <input type="text" name="detail">
+        <?php if ($error['event_name'] === 'blank') : ?>
+            <p>イベント名を入力してください</p>
+        <?php endif ?>
+        <label>
+            <input type="text" name="event_name" placeholder="イベント名">
+        </label>
+        <?php if ($error['start_at'] === 'blank') : ?>
+            <p>開始日時を入力してください</p>
+        <?php endif ?>
+        <label>
+            <input type="datetime-local" name='start_at'>
+        </label>
+        <?php if ($error['end_at'] === 'blank') : ?>
+            <p>終了日時を入力してください</p>
+        <?php endif ?>
+        <label>
+            <input type="datetime-local" name="end_at">
+        </label>
+        <label>
+            <input type="text" name="detail">
+        </label>
         <input type="submit" value="登録">
     </form>
 </body>

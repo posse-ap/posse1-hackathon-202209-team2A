@@ -14,6 +14,7 @@ class Admin
 
     public function create_event($name, $start_at, $end_at)
     {
+        // TODO format input datetime to insert record
         $stmt = $this->db->prepare('INSERT INTO events (name, start_at, end_at) VALUES (:name, :start_at, :end_at)');
         $stmt->bindValue(':name', $name, \PDO::PARAM_STR);
         $stmt->bindValue(':start_at', $start_at, \PDO::PARAM_STR);
