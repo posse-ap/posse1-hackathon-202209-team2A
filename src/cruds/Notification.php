@@ -19,9 +19,10 @@ class Notification
   }
 
   public function before_attendance_event() {
-    $stmt = $this->db ->prepare("SELECT name,detail,start_at FROM events WHERE DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)");
-    $stmt -> bindValue();
+    $stmt = $this->db ->prepare("SELECT name,detail,start_at,end_at FROM events WHERE DATE(start_at) = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)");
+    // $stmt -> bindValue();
     $stmt -> execute();
     return $stmt -> fetchAll();
   }
+ 
 }
