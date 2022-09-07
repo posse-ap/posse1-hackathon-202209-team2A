@@ -1,6 +1,6 @@
 <?php
 require_once('config.php');
-use cruds\User;
+use cruds\User as Cruds;
 use modules\auth\User as Auth;
 
 $auth = new Auth($db);
@@ -8,9 +8,9 @@ $auth = new Auth($db);
 $auth->validate();
 $user_id = $_SESSION['user']['id'];
 
-$crud = new User($db);
+$crud = new Cruds($db);
 
-$events=$crud->read_events();
+$events = $crud->read_events();
 
 if (isset($_GET['is_attendance'])) {
   $is_attendance = $_GET['is_attendance'];
@@ -40,7 +40,8 @@ function get_day_of_week($w)
   <title>Schedule | POSSE</title>
 </head>
 
-<body>
+include dirname(__FILE__) . '/component/header.php';
+?>
   <header class="h-16">
     <div class="flex justify-between items-center w-full h-full mx-auto pl-2 pr-5">
       <div class="h-full">
@@ -65,6 +66,10 @@ function get_day_of_week($w)
           <a href="index.php?is_answered=1" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a>
         </div>
       </div>
+
+
+
+
       <div id="events-list">
         <div class="flex justify-between items-center mb-3">
           <h2 class="text-sm font-bold">一覧</h2>
@@ -96,21 +101,62 @@ function get_day_of_week($w)
                   <p class="text-sm font-bold text-gray-300">不参加</p>
                   -->
                 <?php else : ?>
-<!--
+                  <!--
                   <p class="text-sm font-bold text-green-400">参加</p>
                   -->
                 <?php endif; ?>
               </div>
               <p class="text-sm"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
-              <?php foreach($event['attendance_users'] as $attendance):  ?>
-                <div><?=$attendance['username']?></div>
+              <?php foreach ($event['attendance_users'] as $attendance) :  ?>
+                <div><?= $attendance['username'] ?></div>
               <?php endforeach ?>
             </div>
           </div>
         <?php endforeach; ?>
       </div>
     </div>
+
+
+    
+  <!-- ページネーション -->
+  <!-- This example requires Tailwind CSS v2.0+ -->
+  <div class="flex items-center justify-items-center px-4 py-3 sm:px-6">
+    <div class="flex flex-1 justify-between sm:hidden">
+      <a href="#" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
+      <a href="#" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
+    </div>
+    <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+      <div>
+        <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+          <a href="#" class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
+            <span class="sr-only">Previous</span>
+            <!-- Heroicon name: mini/chevron-left -->
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
+          <a href="#" aria-current="page" class="relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20">1</a>
+          <a href="#" class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">2</a>
+          <a href="#" class="relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex">3</a>
+          <span class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700">...</span>
+          <a href="#" class="relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex">8</a>
+          <a href="#" class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">9</a>
+          <a href="#" class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">10</a>
+          <a href="#" class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
+            <span class="sr-only">Next</span>
+            <!-- Heroicon name: mini/chevron-right -->
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
   </main>
+
+
 
   <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
     <div class="modal-overlay absolute w-full h-full bg-black opacity-80"></div>
@@ -129,6 +175,7 @@ function get_day_of_week($w)
     </div>
   </div>
 
+
   <script src="/js/main.js"></script>
   <script>
     const attendance_buttons = document.querySelectorAll('#attendance_button_container>a');
@@ -139,15 +186,15 @@ function get_day_of_week($w)
 
     }
   </script>
-    <?php if ($is_answered == '1') { ?>
-      <script>
-        changedButtonColor(3);
-      </script>
-  <?php }else if($is_attendance == '1') { ?>
+  <?php if ($is_answered == '1') { ?>
+    <script>
+      changedButtonColor(3);
+    </script>
+  <?php } else if ($is_attendance == '1') { ?>
     <script>
       changedButtonColor(1);
     </script>
-  <?php } else if($is_attendance == '0'){ ?>
+  <?php } else if ($is_attendance == '0') { ?>
     <script>
       changedButtonColor(2);
     </script>
@@ -156,6 +203,8 @@ function get_day_of_week($w)
       changedButtonColor(0);
     </script>
   <?php } ?>
+
+
 </body>
 
 </html>
