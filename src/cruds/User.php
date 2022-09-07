@@ -63,13 +63,22 @@ class User
         INNER JOIN users ON users.id = event_attendance.user_id
         where end_at > now()
         and users.id = :user_id
-        and is_attendance = :is_attendance
+        and event_attendance.is_attendance = :is_attendance
         ");
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':is_attendance', $is_attendance, PDO::PARAM_BOOL);
         $stmt->execute();
-        $attendant_events = $stmt->fetchAll();
-        return $attendant_events;
+        $num = $stmt->rowCount();
+
+        if ($num > 0) {
+            $events = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $row['attendance_users'] = $this->read_attendances($row['event_id']);
+                array_push($events, $row);
+            }
+            return $events;
+        }
+        return array(); 
     }
     public function read_unanswered_events($user_id)
     {
