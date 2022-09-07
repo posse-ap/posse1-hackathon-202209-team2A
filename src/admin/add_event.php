@@ -27,42 +27,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+
+include $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
+<header class="h-16">
+      <div class="flex justify-between items-center w-full h-full mx-auto pl-2 pr-5">
+        <div class="h-full">
+          <img src="/img/header-logo.png" alt="" class="h-full">
+        </div>
+      </div>
+    </header>
 <body>
-    <form action="" method="POST">
-        <?php if ($error['event_name'] === 'blank') : ?>
-            <p>イベント名を入力してください</p>
-        <?php endif ?>
-        <label>
-            <input type="text" name="event_name" placeholder="イベント名">
-        </label>
-        <?php if ($error['start_at'] === 'blank') : ?>
-            <p>開始日時を入力してください</p>
-        <?php endif ?>
-        <label>
-            <input type="datetime-local" name='start_at'>
-        </label>
-        <?php if ($error['end_at'] === 'blank') : ?>
-            <p>終了日時を入力してください</p>
-        <?php endif ?>
-        <label>
-            <input type="datetime-local" name="end_at">
-        </label>
-        <label>
-            <input type="text" name="detail">
-        </label>
-        <input type="submit" value="登録">
-    </form>
+    <main class="bg-gray-100 h-screen">
+        <div class="w-full mx-auto py-10 px-5">
+            <h2 class="text-md font-bold mb-5">イベント登録</h2>
+            <form action="" method="POST">
+                <?php if ($error['event_name'] === 'blank') : ?>
+                    <p>イベント名を入力してください</p>
+                <?php endif ?>
+                <input type="text" name="event_name" placeholder="イベント名" class="w-full p-4 text-sm mb-3">
+                <?php if ($error['start_at'] === 'blank') : ?>
+                    <p>開始日時を入力してください</p>
+                <?php endif ?>
+                <input type="datetime-local" name='start_at' class="w-full p-4 text-sm mb-3">
+                <?php if ($error['end_at'] === 'blank') : ?>
+                    <p>終了日時を入力してください</p>
+                <?php endif ?>
+                <input type="datetime-local" name="end_at" class="w-full p-4 text-sm mb-3">
+                <textarea name="detail" id="" cols="30" rows="10" class="w-full p-4 text-sm mb-3" placeholder="イベント内容"></textarea>
+                <input type="submit" value="登録" class="cursor-pointer w-full p-3 text-md text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300">
+            </form>
+            <div class="text-center text-xs text-gray-400 mt-6">
+            </div>
+        </div>
+    </main>
 </body>
 
 </html>

@@ -29,11 +29,6 @@ function get_day_of_week($w)
 
 include dirname(__FILE__) . '/component/header.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="ja">
-
-<body>
   <header class="h-16">
     <div class="flex justify-between items-center w-full h-full mx-auto pl-2 pr-5">
       <div class="h-full">
