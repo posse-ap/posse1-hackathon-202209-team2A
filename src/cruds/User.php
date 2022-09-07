@@ -2,6 +2,7 @@
 
 
 namespace cruds;
+use PDO;
 
 class User
 {
@@ -23,7 +24,7 @@ class User
 
         if ($num > 0) {
             $events = array();
-            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $row['attendance_users'] = $this->read_attendances($row['event_id']);
                 array_push($events, $row);
             }
@@ -33,7 +34,7 @@ class User
     public function get_user($email)
     {
         $stmt = $this->db->prepare('SELECT * FROM users WHERE users.email=:email');
-        $stmt->bindValue(':email', $email, \PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetch();
     }

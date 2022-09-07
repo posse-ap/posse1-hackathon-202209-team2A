@@ -1,6 +1,6 @@
 <?php
 require_once('config.php');
-use cruds\User;
+use cruds\User as Cruds;
 use modules\auth\User as Auth;
 
 $auth = new Auth($db);
@@ -8,7 +8,7 @@ $auth = new Auth($db);
 $auth->validate();
 $user_id = $_SESSION['user']['id'];
 
-$crud = new User($db);
+$crud = new Cruds($db);
 
 $events=$crud->read_events();
 

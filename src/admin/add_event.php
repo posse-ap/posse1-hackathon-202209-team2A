@@ -1,18 +1,15 @@
 <?php
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
 use cruds\Admin as Cruds;
 
-if ($_SERVER['HTTP_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $event_name = $_REQUEST['event_name'];
     $start_at = $_REQUEST['start_at'];
     $end_at = $_REQUEST['end_at'];
     $detail = $_REQUEST['detail'];
-    $error = array(
-        'event_name' => '',
-        'start_at' => '',
-        'end_at' => '',
-    );
+    $error = array();
     if (!isset($event_name)) {
         $error['event_name'] = 'blank';
     }
@@ -42,7 +39,7 @@ if ($_SERVER['HTTP_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <form action="" method="post">
+    <form action="" method="POST">
         <?php if ($error['event_name'] === 'blank') : ?>
             <p>イベント名を入力してください</p>
         <?php endif ?>
