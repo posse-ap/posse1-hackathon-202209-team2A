@@ -18,5 +18,9 @@ class Utils
     {
         return date('Y-m-d H:i:s', strtotime($datetime_local));
     }
-
+    public static function get_day_of_week($w)
+    {
+      $day_of_week_list = ['日', '月', '火', '水', '木', '金', '土'];
+      return $day_of_week_list["$w"];
+    }
 }
