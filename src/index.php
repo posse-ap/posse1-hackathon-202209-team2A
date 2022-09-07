@@ -6,8 +6,7 @@ use modules\auth\User as Auth;
 $auth = new Auth($db);
 
 $auth->validate();
-// $user_id = $_SESSION['user']['id'];
-$user_id = 3;
+$user_id = $_SESSION['user']['id'];
 
 $crud = new User($db);
 
@@ -19,6 +18,7 @@ if (isset($_GET['is_attendance'])) {
 }
 if (isset($_GET['is_answered'])) {
   $is_answered = $_GET['is_answered'];
+  $events = $crud->read_unanswered_events($user_id, $is_attendance);
 }
 
 function get_day_of_week($w)

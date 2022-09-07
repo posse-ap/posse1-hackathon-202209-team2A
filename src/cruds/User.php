@@ -52,7 +52,8 @@ class User
         $stmt = $this->db->prepare
         ("SELECT * FROM events WHERE id NOT IN(
         SELECT event_id FROM event_attendance 
-        WHERE user_id = 1)
+        WHERE user_id = :user_id)
+        and end_at > now()
         ");       
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
