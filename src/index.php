@@ -6,12 +6,22 @@ use modules\auth\User as Auth;
 $auth = new Auth($db);
 
 $auth->validate();
+$user_id = $_SESSION['user']['id'];
 
 $crud = new User($db);
 
 $events=$crud->read_events();
 
-function get_day_of_week ($w) {
+if (isset($_GET['attendance_id'])) {
+  $attendance_id = $_GET['attendance_id'];
+}
+if ($attendance_id == 1) {
+  $is_attendance = true;
+  $events = $crud->read_attendance_events($user_id, $is_attendance);
+}
+
+function get_day_of_week($w)
+{
   $day_of_week_list = ['日', '月', '火', '水', '木', '金', '土'];
   return $day_of_week_list["$w"];
 }
@@ -44,17 +54,15 @@ function get_day_of_week ($w) {
 
   <main class="bg-gray-100">
     <div class="w-full mx-auto p-5">
-      <!--
       <div id="filter" class="mb-8">
         <h2 class="text-sm font-bold mb-3">フィルター</h2>
-        <div class="flex">
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white">全て</a>
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">参加</a>
+        <div id="attendance_button_container" class="flex">
+          <a href="index.php" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">全て</a>
+          <a href="index.php?attendance_id=1" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">参加</a>
           <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">不参加</a>
           <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a>
         </div>
       </div>
-      -->
       <div id="events-list">
         <div class="flex justify-between items-center mb-3">
           <h2 class="text-sm font-bold">一覧</h2>
@@ -117,6 +125,24 @@ function get_day_of_week ($w) {
   </div>
 
   <script src="/js/main.js"></script>
+  <script>
+    const attendance_buttons = document.querySelectorAll('#attendance_button_container>a');
+
+    function changedButtonColor(attendance_id) {
+      attendance_buttons[attendance_id].classList.add('bg-blue-600');
+      attendance_buttons[attendance_id].classList.add('text-white');
+
+    }
+  </script>
+  <?php if ($attendance_id == 1) { ?>
+    <script>
+      changedButtonColor(1);
+    </script>;
+  <?php } else { ?>
+    <script>
+      changedButtonColor(0);
+    </script>;
+  <?php }; ?>
 </body>
 
 </html>

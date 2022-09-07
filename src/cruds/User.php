@@ -30,4 +30,20 @@ class User
         $stmt->execute();
         return $stmt->fetch();
     }
+
+    public function read_attendance_events($user_id,$is_attendance)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM events 
+        INNER JOIN event_attendance ON events.id = event_attendance.event_id
+        INNER JOIN users ON users.id = event_attendance.user_id
+        where end_at > now()
+        and users.id = :user_id
+        and is_attendance = :is_attendance
+        ");       
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':is_attendance', $is_attendance, PDO::PARAM_BOOL);
+        $stmt->execute();
+        $attendant_events = $stmt->fetchAll();
+        return $attendant_events;
+    }
 }
