@@ -138,20 +138,20 @@ function get_day_of_week($w)
     <?php if ($is_answered == '1') { ?>
       <script>
         changedButtonColor(3);
-      </script>;
+      </script>
   <?php }else if($is_attendance == '1') { ?>
     <script>
       changedButtonColor(1);
-    </script>;
+    </script>
   <?php } else if($is_attendance == '0'){ ?>
     <script>
       changedButtonColor(2);
-    </script>;
+    </script>
   <?php } else { ?>
     <script>
       changedButtonColor(0);
-    </script>;
-  <?php }; ?>
+    </script>
+  <?php } ?>
 </body>
 
 </html>
