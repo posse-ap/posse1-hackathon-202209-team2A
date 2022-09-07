@@ -72,7 +72,19 @@ class User
         $attendant_events = $stmt->fetchAll();
         return $attendant_events;
     }
-
+    public function read_unanswered_events($user_id)
+    {
+        $stmt = $this->db->prepare
+        ("SELECT * FROM events WHERE id NOT IN(
+        SELECT event_id FROM event_attendance 
+        WHERE user_id = :user_id)
+        and end_at > now()
+        ");       
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $unanswered_events = $stmt->fetchAll();
+        return $unanswered_events;
+    }    
     public function update_user_password($email, $new_password)
     {
         $stmt = $this->db->prepare('UPDATE users SET hashed_password = :hashed_password
