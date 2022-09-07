@@ -50,10 +50,10 @@ CREATE TABLE admins (
 );
 
 
-INSERT INTO users SET username='武田龍一', email='ryuichitakeda@posse.com', hashed_password=SHA2('takeda',224);
-INSERT INTO users SET username='福場脩真', email='shumafukuba@posse.com', hashed_password=SHA2('fukuba',224);
-INSERT INTO users SET username='古屋美羽', email='miuhuruya@posse.com', hashed_password=SHA2('huruya',224);
-INSERT INTO users SET username='中澤和貴', email='kazukinakazawa@posse.com', hashed_password=SHA2('nakazawa',224);
+INSERT INTO users SET username='武田龍一', email='ryuichitakeda@posse.com', hashed_password=SHA1('takeda');
+INSERT INTO users SET username='福場脩真', email='shumafukuba@posse.com', hashed_password=SHA1('fukuba');
+INSERT INTO users SET username='古屋美羽', email='miuhuruya@posse.com', hashed_password=SHA1('huruya');
+INSERT INTO users SET username='中澤和貴', email='kazukinakazawa@posse.com', hashed_password=SHA1('nakazawa');
 
 
 INSERT INTO events SET name='縦モク', start_at='2021/08/01 21:00', end_at='2021/08/01 23:00';
