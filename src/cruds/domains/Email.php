@@ -16,19 +16,16 @@ class Email
     $body = <<<EOT
     
     ${start_at}から${end_at}に${event}を開催します。
-    詳細：${detail}
+    詳細：
+    ${detail}
+
+
     参加／不参加の回答をお願いします。
-    
     http://localhost/auth/login
     EOT;
 
-
-    // if (){
     mb_send_mail($to, $subject, $body, $headers);
     echo "メールを送信しました";
-  // }else{
-    
-  // }
   }
   
 }
