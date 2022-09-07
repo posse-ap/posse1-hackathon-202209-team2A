@@ -12,12 +12,13 @@ $crud = new User($db);
 
 $events=$crud->read_events();
 
-if (isset($_GET['attendance_id'])) {
-  $attendance_id = $_GET['attendance_id'];
-}
-if ($attendance_id == 1) {
-  $is_attendance = true;
+if (isset($_GET['is_attendance'])) {
+  $is_attendance = $_GET['is_attendance'];
   $events = $crud->read_attendance_events($user_id, $is_attendance);
+}
+if (isset($_GET['is_answered'])) {
+  $is_answered = $_GET['is_answered'];
+  $events = $crud->read_unanswered_events($user_id, $is_attendance);
 }
 
 function get_day_of_week($w)
@@ -58,9 +59,9 @@ function get_day_of_week($w)
         <h2 class="text-sm font-bold mb-3">フィルター</h2>
         <div id="attendance_button_container" class="flex">
           <a href="index.php" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">全て</a>
-          <a href="index.php?attendance_id=1" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">参加</a>
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">不参加</a>
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a>
+          <a href="index.php?is_attendance=1" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">参加</a>
+          <a href="index.php?is_attendance=0" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">不参加</a>
+          <a href="index.php?is_answered=1" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a>
         </div>
       </div>
       <div id="events-list">
@@ -137,15 +138,23 @@ function get_day_of_week($w)
 
     }
   </script>
-  <?php if ($attendance_id == 1) { ?>
+    <?php if ($is_answered == '1') { ?>
+      <script>
+        changedButtonColor(3);
+      </script>
+  <?php }else if($is_attendance == '1') { ?>
     <script>
       changedButtonColor(1);
-    </script>;
+    </script>
+  <?php } else if($is_attendance == '0'){ ?>
+    <script>
+      changedButtonColor(2);
+    </script>
   <?php } else { ?>
     <script>
       changedButtonColor(0);
-    </script>;
-  <?php }; ?>
+    </script>
+  <?php } ?>
 </body>
 
 </html>
