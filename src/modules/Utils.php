@@ -14,4 +14,9 @@ class Utils
     {
         return json_encode($var, JSON_UNESCAPED_UNICODE);
     }
+    public static function convert_datetime($datetime_local)
+    {
+        return date('Y-m-d H:i:s', strtotime($datetime_local));
+    }
+
 }
