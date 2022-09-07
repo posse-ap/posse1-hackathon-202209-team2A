@@ -1,7 +1,7 @@
 <?php
 
 
-namespace curds;
+namespace cruds;
 
 
 class User
