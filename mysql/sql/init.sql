@@ -29,7 +29,7 @@ CREATE TABLE event_attendance (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   event_id INT NOT NULL,
   user_id INT NOT NULL,
-  is_attendance BOOLEAN NOT NULL,
+  is_attendance INTEGER DEFAULT 2,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted_at DATETIME,
@@ -93,10 +93,12 @@ INSERT INTO events SET name='スぺモク', start_at='2022/10/06 10:00', end_at=
 INSERT INTO events SET name='スぺモク', start_at='2022/10/06 10:00', end_at='2022/10/06 22:00';
 
 
+
 INSERT INTO event_attendance SET event_id=1, user_id=1, is_attendance=true;
 INSERT INTO event_attendance SET event_id=1, user_id=2, is_attendance=true;
 INSERT INTO event_attendance SET event_id=1, user_id=3, is_attendance=true;
 INSERT INTO event_attendance SET event_id=1, user_id=4, is_attendance=false;
+INSERT INTO event_attendance SET event_id=1, user_id=5;
 
 INSERT INTO event_attendance SET event_id=2, user_id=1, is_attendance=true;
 INSERT INTO event_attendance SET event_id=2, user_id=2, is_attendance=false;
