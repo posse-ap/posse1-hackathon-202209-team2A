@@ -3,11 +3,16 @@ define('DSN', 'mysql:host=' . getenv('MYSQL_HOST') . ';dbname=' . getenv('MYSQL_
 define('DB_USER', getenv('MYSQL_USER'));
 define('DB_PASS', getenv('MYSQL_PASSWORD'));
 define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST']);
+define('GITHUB_CLIENT_ID', getenv('GITHUB_CLIENT_ID'));
+define('GITHUB_CLIENT_SECRET', getenv('GITHUB_CLIENT_SECRET'));
+define('GITHUB_REDIRECT_URL', SITE_URL . getenv('GITHUB_REDIRECT_URL'));
 
 require_once(dirname(__FILE__) . '/database/Database.php');
+require_once(dirname(__FILE__) . '/cruds/domains/GitHub.php');
 session_start();
 
 use database\Database;
+use cruds\domains\GitHub;
 
 // クラスを自動ロードする関数
 spl_autoload_register(function ($classname) {
@@ -29,3 +34,12 @@ spl_autoload_register(function ($classname) {
 });
 
 $db = Database::getInstance();
+$git_client= new GitHub(array(
+    'client_id' => GITHUB_CLIENT_ID,
+    'client_secret' => GITHUB_CLIENT_SECRET,
+    'redirect_uri' => GITHUB_REDIRECT_URL
+));
+
+if(isset($_SESSION['access_token'])){
+    $access_token = $_SESSION['access_token'];
+}

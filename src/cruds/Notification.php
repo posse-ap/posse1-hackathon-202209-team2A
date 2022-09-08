@@ -3,10 +3,10 @@
 namespace cruds;
 
 require_once('User.php');
-use cruds\User;
 
 class Notification
 {
+  protected $db;
   public function __construct(\PDO $db)
   {
     $this->db = $db;
@@ -23,6 +23,7 @@ class Notification
     $stmt -> execute();
     return $stmt -> fetchAll();
   }
+<<<<<<< HEAD
 
   public function get_attendee() {
     $stmt = $this->db ->prepare("SELECT name,email FROM users JOIN event_attendance on users.id = event_attendance.user_id 
@@ -46,5 +47,6 @@ class Notification
     $stmt -> execute();
     return $stmt -> fetchAll();
   }
- 
+=======
+>>>>>>> 56e15cba46cf8d3a839bf43306067d681cefb233
 }
