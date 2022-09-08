@@ -34,6 +34,16 @@ class GitHub
         ]);
     }
 
+    public function get_access_token($state, $oauth_code){
+        $token = self::api_request($this->token_url . '?' . http_build_query([
+            'client_id' => $this->client_id,
+            'client_secret' => $this->client_secret,
+            'state' => $state,
+            'code' => $oauth_code
+        ]));
+        return $token->access_token;
+    }
+
     public function api_request($access_token_url)
     {
         $api_url = filter_var($access_token_url, FILTER_VALIDATE_URL) ? $access_token_url : $this->api_url_base  . 'user?access_token=' . $access_token_url;
@@ -68,9 +78,34 @@ class GitHub
             } else {
                 $error_msg = $api_response;
             }
-            throw new Exception('Error ' . $http_code . ': ' . $error_msg);
+            throw new \Exception('Error ' . $http_code . ': ' . $error_msg);
         } else {
             return json_decode($api_response);
+        }
+    }
+
+    public function get_authoricated_email($access_token)
+    {
+        $api_url = $this->api_url_base . '/user/emails';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $api_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Authorization: token ' . $access_token));
+        curl_setopt($ch, CURLOPT_USERAGENT, 'CodexWorld GitHub OAuth Login');
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        $api_response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($http_code != 200) {
+            if (curl_errno($ch)) {
+                $error_msg = curl_error($ch);
+            } else {
+                $error_msg = $api_response;
+            }
+            throw new \Exception('Error ' . $http_code . ': ' . $error_msg);
+        } else {
+            return json_decode($api_response)[0]->email;
         }
     }
 }
