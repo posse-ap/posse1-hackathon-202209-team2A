@@ -2,6 +2,7 @@
 
 
 namespace cruds;
+
 use PDO;
 
 class User
@@ -31,6 +32,21 @@ class User
             return $events;
         }
     }
+
+    public function read_event($event_id)
+    {
+        $stmt = $this->db->prepare("SELECT events.id, events.name, events.start_at, events.end_at,
+        count(event_attendance.id) AS total_participants FROM events
+        LEFT JOIN event_attendance ON events.id = event_attendance.event_id
+        where events.id = :event_id
+        ORDER BY start_at");
+        $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        $row['attendance_users'] = $this->read_attendances($row['event_id']);
+        return $row;
+    }
+
     public function get_user($email)
     {
         $stmt = $this->db->prepare('SELECT * FROM users WHERE users.email=:email');
@@ -56,25 +72,38 @@ class User
         return $stmt->fetchAll();
     }
 
-    public function read_attendance_events($user_id,$is_attendance)
+    public function read_attendance_events($user_id, $is_attendance)
     {
-        $stmt = $this->db->prepare("SELECT * FROM events
+        $stmt = $this->db->prepare("SELECT
+        events.id,
+        events.name,
+        events.start_at,
+        events.end_at
+        FROM events
         INNER JOIN event_attendance ON events.id = event_attendance.event_id
         INNER JOIN users ON users.id = event_attendance.user_id
         where end_at > now()
         and users.id = :user_id
-        and is_attendance = :is_attendance
+        and event_attendance.is_attendance = :is_attendance
         ");
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':is_attendance', $is_attendance, PDO::PARAM_BOOL);
         $stmt->execute();
-        $attendant_events = $stmt->fetchAll();
-        return $attendant_events;
+        $num = $stmt->rowCount();
+
+        if ($num > 0) {
+            $events = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $row['attendance_users'] = $this->read_attendances($row['event_id']);
+                array_push($events, $row);
+            }
+            return $events;
+        }
+        return array();
     }
     public function read_unanswered_events($user_id)
     {
-        $stmt = $this->db->prepare
-        ("SELECT * FROM events WHERE id NOT IN(
+        $stmt = $this->db->prepare("SELECT * FROM events WHERE id NOT IN(
         SELECT event_id FROM event_attendance
         WHERE user_id = :user_id)
         and end_at > now()
@@ -92,5 +121,45 @@ class User
         $stmt->bindValue(':hashed_password', $hashed_password, PDO::PARAM_STR);
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         return $stmt->execute();
+    }
+
+    private function add_attendance($event_id, $user_id, $is_attendance)
+    {
+        $stmt = $this->db->prepare("INSERT INTO event_attendance SET
+        event_id = :event_id,
+        user_id = :user_id,
+        is_attendance = :is_attendance");
+        $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':is_attendance', $is_attendance, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    private function update_attendance($event_id, $user_id, $is_attendance)
+    {
+        $stmt = $this->db->prepare("UPDATE event_attendance SET
+        is_attendance = :is_attendance
+        WHERE event_id = :event_id
+        AND user_id = :user_id");
+        $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':is_attendance', $is_attendance, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function handle_attendance($event_id, $user_id, $is_attendance)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM event_attendance
+        WHERE event_id = :event_id
+        AND user_id = :user_id");
+        $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $num = $stmt->rowCount();
+        if ($num > 0) {
+            return $this->update_attendance($event_id, $user_id, $is_attendance);
+        } else {
+            return $this->add_attendance($event_id, $user_id, $is_attendance);
+        }
     }
 }
