@@ -23,6 +23,12 @@ if (isset($_GET['is_answered'])) {
   $events = $crud->read_unanswered_events($user_id, $is_attendance);
 }
 
+if(isset($_GET['page'])){
+  $page = $_GET['page'];
+}else{
+  $page = 1;
+}
+
 include dirname(__FILE__) . '/component/header.php';
 ?>
 <header class="h-16">
@@ -50,21 +56,17 @@ include dirname(__FILE__) . '/component/header.php';
       </div>
     </div>
 
-
-
-
-    <div id="events-list">
-      <div class="flex justify-between items-center mb-3">
-        <h2 class="text-sm font-bold">一覧</h2>
-      </div>
-
-      <?php foreach ($events as $event) : ?>
-        <?php
-        $start_date = strtotime($event['start_at']);
-        $end_date = strtotime($event['end_at']);
-        $day_of_week = Utils::get_day_of_week(date("w", $start_date));
-        ?>
-        <a class="bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>" href="/attendance.php?event_id=<?= $event['id'] ?>">
+      <div id="events-list">
+        <div class="flex justify-between items-center mb-3">
+          <h2 class="text-sm font-bold">一覧</h2>
+        </div>
+        <?php foreach (array_slice($events,10*($page-1),10) as $event) : ?>
+          <?php
+          $start_date = strtotime($event['start_at']);
+          $end_date = strtotime($event['end_at']);
+          $day_of_week = Utils::get_day_of_week(date("w", $start_date));
+          ?>
+          <a class="bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>" href="/attendance.php?event_id=<?= $event['id'] ?>">
           <div>
             <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
             <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
@@ -171,14 +173,9 @@ include dirname(__FILE__) . '/component/header.php';
               <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
             </svg>
           </a>
-          <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
-          <a href="#" aria-current="page" class="relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20">1</a>
-          <a href="#" class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">2</a>
-          <a href="#" class="relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex">3</a>
-          <span class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700">...</span>
-          <a href="#" class="relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex">8</a>
-          <a href="#" class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">9</a>
-          <a href="#" class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">10</a>
+          <?php for($page = 1;$page <= ceil(count($events)/10);$page++) : ?>
+          <a href="<?="index.php?page=" . $page; ?>" class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"><?=$page; ?>
+          <?php endfor; ?>
           <a href="#" class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
             <span class="sr-only">Next</span>
             <!-- Heroicon name: mini/chevron-right -->
