@@ -1,14 +1,16 @@
 <?php
-require_once('../../cruds/Notification.php');
+require_once('../../cruds/Notification_alluser.php');
 require_once('../../cruds/domains/Email.php');
 
 use cruds\domains\Email;
-use cruds\Notification;
+use cruds\Notification_alluser;
 
 $mail = new Email;
-$crud = new Notification($db);
+$crud = new Notification_alluser($db);
 $get_all_users = $crud -> get_all_user();
 $before_attendance_events = $crud -> before_attendance_event();
+
+
 // var_dump($before_attendance_event);
 $to = "";
 foreach($get_all_users as $get_all_user) {

@@ -79,6 +79,31 @@ INSERT INTO events SET name='運動会', start_at='2022/10/15 10:00', end_at='20
 INSERT INTO events SET name='ハロウィン', start_at='2022/10/31 10:00', end_at='2022/10/31 22:00',dead_line='2022/10/31 22:00';
 INSERT INTO events SET name='クリスマス', start_at='2022/12/24 18:00', end_at='2022/12/24 22:00',dead_line='2022/12/24 22:00';
 INSERT INTO events SET name='冬のDX', start_at='2022/12/28 20:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/9イベント', start_at='2022/09/09 20:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/9イベント2', start_at='2022/09/09 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/9イベント3', start_at='2022/09/09 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/10イベント2', start_at='2022/09/10 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/10イベント3', start_at='2022/09/10 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/10イベント3', start_at='2022/09/10 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/11イベント', start_at='2022/09/11 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/11イベント2', start_at='2022/09/11 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/11イベント3', start_at='2022/09/11 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/12イベント', start_at='2022/09/12 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/12イベント2', start_at='2022/09/12 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/12イベント3', start_at='2022/09/13 15:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/12イベント4', start_at='2022/09/12 12:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/12イベント5', start_at='2022/09/12 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/13イベント', start_at='2022/09/13 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/13イベント1', start_at='2022/09/13 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/13イベント2', start_at='2022/09/13 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/13イベント3', start_at='2022/09/13 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/13イベント4', start_at='2022/09/13 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/13イベント5', start_at='2022/09/13 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/14イベント', start_at='2022/09/14 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/14イベント2', start_at='2022/09/14 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/14イベント3', start_at='2022/09/14 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/14イベント4', start_at='2022/09/14 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
+INSERT INTO events SET name='9/14イベント5', start_at='2022/09/14 21:00', end_at='2022/12/28 22:00',dead_line='2022/12/28 22:00';
 
 
 
@@ -97,6 +122,31 @@ INSERT INTO event_attendance SET event_id=17, user_id=4, is_attendance=false;
 INSERT INTO event_attendance SET event_id=18, user_id=1, is_attendance=true;
 INSERT INTO event_attendance SET event_id=18, user_id=2, is_attendance=true;
 INSERT INTO event_attendance SET event_id=18, user_id=3, is_attendance=true;
+INSERT INTO event_attendance SET event_id=20, user_id=3, is_attendance=true;
+INSERT INTO event_attendance SET event_id=21, user_id=1, is_attendance=true;
+INSERT INTO event_attendance SET event_id=21, user_id=2, is_attendance=true;
+INSERT INTO event_attendance SET event_id=21, user_id=3, is_attendance=true;
+INSERT INTO event_attendance SET event_id=22, user_id=4, is_attendance=true;
+INSERT INTO event_attendance SET event_id=22, user_id=2, is_attendance=true;
+INSERT INTO event_attendance SET event_id=23, user_id=4, is_attendance=true;
+INSERT INTO event_attendance SET event_id=23, user_id=3, is_attendance=true;
+INSERT INTO event_attendance SET event_id=23, user_id=2, is_attendance=true;
+INSERT INTO event_attendance SET event_id=24, user_id=1, is_attendance=true;
+INSERT INTO event_attendance SET event_id=24, user_id=2, is_attendance=true;
+INSERT INTO event_attendance SET event_id=25, user_id=1, is_attendance=true;
+INSERT INTO event_attendance SET event_id=25, user_id=5, is_attendance=true;
+INSERT INTO event_attendance SET event_id=25, user_id=3, is_attendance=true;
+INSERT INTO event_attendance SET event_id=26, user_id=1, is_attendance=true;
+INSERT INTO event_attendance SET event_id=26, user_id=2, is_attendance=true;
+INSERT INTO event_attendance SET event_id=27, user_id=2, is_attendance=true;
+INSERT INTO event_attendance SET event_id=27, user_id=3, is_attendance=true;
+INSERT INTO event_attendance SET event_id=27, user_id=4, is_attendance=true;
+INSERT INTO event_attendance SET event_id=28, user_id=4, is_attendance=true;
+INSERT INTO event_attendance SET event_id=28, user_id=1, is_attendance=true;
+INSERT INTO event_attendance SET event_id=28, user_id=2, is_attendance=true;
+INSERT INTO event_attendance SET event_id=29, user_id=1, is_attendance=true;
+INSERT INTO event_attendance SET event_id=29, user_id=2, is_attendance=true;
+INSERT INTO event_attendance SET event_id=29, user_id=5, is_attendance=true;
 
 
 
