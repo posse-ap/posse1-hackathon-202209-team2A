@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_SESSION['add_user']['password'];
 
     if ($cruds->create_user($username, $email, $password)) {
-        header("Location: " . $_SERVER['HTTP_HOST'] . '/admin');
+        header("Location: /admin");
         exit();
     }
 }

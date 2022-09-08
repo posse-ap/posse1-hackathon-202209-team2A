@@ -2,7 +2,6 @@
 
 
 namespace cruds;
-use PDO;
 use modules\Utils;
 
 
@@ -51,7 +50,7 @@ class Admin
         $new_user_id =  $this->db->lastInsertId();
         $event_ids = $this->get_event_ids();
         foreach($event_ids as $event_id) {
-            $this->create_association_data($new_user_id, $event_id);
+            $this->create_association_data($new_user_id, $event_id['id']);
         }
         return $success;
     }
@@ -93,8 +92,8 @@ class Admin
     private function create_association_data($user_id, $event_id)
     {
         $stmt = $this->db->prepare('INSERT INTO event_attendance (user_id, event_id) VALUES(:user_id, :event_id)');
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $user_id, \PDO::PARAM_INT);
+        $stmt->bindValue(':event_id', $event_id, \PDO::PARAM_INT);
         return $stmt->execute();
     }
 
@@ -102,7 +101,7 @@ class Admin
     {
         $stmt = $this->db->query('SELECT id FROM events');
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll();
     }
 
     private function get_user_ids()
