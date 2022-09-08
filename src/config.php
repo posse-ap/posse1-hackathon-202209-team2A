@@ -6,6 +6,9 @@ define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST']);
 define('GITHUB_CLIENT_ID', getenv('GITHUB_CLIENT_ID'));
 define('GITHUB_CLIENT_SECRET', getenv('GITHUB_CLIENT_SECRET'));
 define('GITHUB_REDIRECT_URL', SITE_URL . getenv('GITHUB_REDIRECT_URL'));
+define('SLACK_OAUTH_USER_TOKEN', getenv('SLACK_OAUTH_USER_TOKEN'));
+define('SLACK_OAUTH_BOT_TOKEN', getenv('SLACK_OAUTH_BOT_TOKEN'));
+define('SLACK_WEBHOOKS_URL', getenv('SLACK_WEBHOOKS_URL'));
 
 require_once(dirname(__FILE__) . '/database/Database.php');
 require_once(dirname(__FILE__) . '/cruds/domains/GitHub.php');
