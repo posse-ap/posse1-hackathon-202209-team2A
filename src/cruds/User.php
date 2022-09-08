@@ -107,9 +107,10 @@ class User
     }
     public function read_unanswered_events($user_id)
     {
-        $stmt = $this->db->prepare("SELECT * FROM events WHERE id NOT IN(
+        $stmt = $this->db->prepare("SELECT * FROM events WHERE id IN(
         SELECT event_id FROM event_attendance
-        WHERE user_id = :user_id)
+        WHERE user_id = :user_id
+        WHERE is_attendance= 2)
         and end_at > now()
         ");
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);

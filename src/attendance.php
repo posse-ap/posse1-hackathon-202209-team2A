@@ -124,10 +124,10 @@ include dirname(__FILE__) . '/component/header.php';
         </div>
         <form action="" method="POST">
             <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
-            <label for="attendance_radio"><input id="attendance_radio" type="radio" value="1" name="is_attendance" <?php if ($event['is_attendance']) {
+            <label for="attendance_radio"><input id="attendance_radio" type="radio" value="1" name="is_attendance" <?php if ($event['is_attendance'] == 1) {
                 echo 'disabled';
             } ?>>参加</label>
-            <label for="unattendance_radio"><input id="unattendance_radio" type="radio" value="0" name="is_attendance" <?php if ($event['is_attendance'] === false) {
+            <label for="unattendance_radio"><input id="unattendance_radio" type="radio" value="0" name="is_attendance" <?php if ($event['is_attendance'] == 0) {
                 echo 'disabled';
             } ?>>不参加</label>
             <br>
