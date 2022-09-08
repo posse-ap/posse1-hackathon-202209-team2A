@@ -3,10 +3,10 @@
 namespace cruds;
 
 require_once('User.php');
-use cruds\User;
 
 class Notification
 {
+  protected $db;
   public function __construct(\PDO $db)
   {
     $this->db = $db;
@@ -46,5 +46,4 @@ class Notification
     $stmt -> execute();
     return $stmt -> fetchAll();
   }
- 
 }
