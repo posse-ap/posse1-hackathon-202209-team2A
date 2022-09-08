@@ -39,7 +39,7 @@ class Email
     EOT;
 
     mb_send_mail($to, $subject, $body, $headers);
-    echo "メールを送信しました";
+    echo "メールを送信しました\n";
   }
 
 }

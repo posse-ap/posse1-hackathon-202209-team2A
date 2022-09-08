@@ -62,7 +62,7 @@ class Notification
 
   public function get_unanswerd_3days_before_event()
   {
-    $stmt = $this->db->query('SELECT users.username username, events.name event_name, events.start_at start_at,
+    $stmt = $this->db->query('SELECT users.email email, users.username username, events.name event_name, events.start_at start_at,
     events.end_at, events.detail detail FROM users
     INNER JOIN event_attendance ON event_attendance.user_id = users.id
     INNER JOIN events ON events.id = event_attendance.event_id
