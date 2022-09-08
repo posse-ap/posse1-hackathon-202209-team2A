@@ -78,19 +78,19 @@ INSERT INTO events SET name='ハロウィン', start_at='2022/10/31 10:00', end_
 INSERT INTO events SET name='クリスマス', start_at='2022/12/24 18:00', end_at='2022/12/24 22:00';
 INSERT INTO events SET name='冬のDX', start_at='2022/12/28 20:00', end_at='2022/12/28 22:00';
 INSERT INTO events SET name='紅白歌合戦', start_at='2022/09/05 10:00', end_at='2022/09/05 22:00';
-INSERT INTO events SET name='縦モク', start_at='2022/09/05 10:00', end_at='2022/09/05 22:00';
-INSERT INTO events SET name='横モク', start_at='2022/09/05 10:00', end_at='2022/09/05 22:00';
-INSERT INTO events SET name='スぺモク', start_at='2022/09/05 10:00', end_at='2022/09/05 22:00';
-INSERT INTO events SET name='スぺモク', start_at='2022/09/05 10:00', end_at='2022/09/05 22:00';
-INSERT INTO events SET name='スぺモク', start_at='2022/09/05 10:00', end_at='2022/09/05 22:00';
-INSERT INTO events SET name='スぺモク', start_at='2022/09/05 10:00', end_at='2022/09/05 22:00';
-INSERT INTO events SET name='紅白歌合戦', start_at='2022/09/06 10:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='縦モク', start_at='2022/09/06 10:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='横モク', start_at='2022/09/06 10:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='スぺモク', start_at='2022/09/06 10:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='スぺモク', start_at='2022/09/06 10:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='スぺモク', start_at='2022/09/06 10:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='スぺモク', start_at='2022/09/06 10:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='縦モク', start_at='2022/10/05 10:00', end_at='2022/10/05 22:00';
+INSERT INTO events SET name='横モク', start_at='2022/10/05 10:00', end_at='2022/10/05 22:00';
+INSERT INTO events SET name='スぺモク', start_at='2022/10/05 10:00', end_at='2022/10/05 22:00';
+INSERT INTO events SET name='スぺモク', start_at='2022/10/05 10:00', end_at='2022/10/05 22:00';
+INSERT INTO events SET name='スぺモク', start_at='2022/10/05 10:00', end_at='2022/10/05 22:00';
+INSERT INTO events SET name='スぺモク', start_at='2022/10/05 10:00', end_at='2022/10/05 22:00';
+INSERT INTO events SET name='紅白歌合戦', start_at='2022/10/06 10:00', end_at='2022/10/06 22:00';
+INSERT INTO events SET name='縦モク', start_at='2022/10/06 10:00', end_at='2022/10/06 22:00';
+INSERT INTO events SET name='横モク', start_at='2022/10/06 10:00', end_at='2022/10/06 22:00';
+INSERT INTO events SET name='スぺモク', start_at='2022/10/06 10:00', end_at='2022/10/06 22:00';
+INSERT INTO events SET name='スぺモク', start_at='2022/10/06 10:00', end_at='2022/10/06 22:00';
+INSERT INTO events SET name='スぺモク', start_at='2022/10/06 10:00', end_at='2022/10/06 22:00';
+INSERT INTO events SET name='スぺモク', start_at='2022/10/06 10:00', end_at='2022/10/06 22:00';
 
 
 INSERT INTO event_attendance SET event_id=1, user_id=1, is_attendance=true;
