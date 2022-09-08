@@ -176,6 +176,6 @@ class User
 
     public function check_user_for_github(array $data)
     {
-        
+
     }
 }
