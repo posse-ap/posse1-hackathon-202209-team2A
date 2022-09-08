@@ -46,7 +46,7 @@ class User
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $row = $stmt->fetch();
-        $row['attendance_users'] = $this->read_attendances($row['event_id']);
+        $row['attendance_users'] = $this->read_attendances($row['id']);
         return $row;
     }
 

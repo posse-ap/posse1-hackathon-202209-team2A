@@ -26,6 +26,7 @@ if (isset($_GET['page'])) {
 }
 
 $loop_num = 1;
+$num = 1;
 
 include dirname(__FILE__) . '/component/header.php';
 ?>
@@ -93,7 +94,7 @@ include dirname(__FILE__) . '/component/header.php';
             <p class="text-sm" id="participant-<?=$loop_num; ?>" onclick="showParticipants(<?=$loop_num; ?>)"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
             <?php foreach ($event['attendance_users'] as $attendance) :  ?>
               <div class="participant-<?=$loop_num; ?>" style="display:none"><?= $attendance['username'] ?></div>
-            <?php endforeach ?>
+            <?php endforeach; ?>
             <?php $loop_num++; ?>
           </div>
         </div>
@@ -133,10 +134,11 @@ include dirname(__FILE__) . '/component/header.php';
                   -->
                     <?php endif; ?>
                   </div>
-                  <p class="text-sm"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
+                  <p class="text-sm" id="participant-<?=$num; ?>" onclick="showParticipants(<?=$num; ?>)"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
                   <?php foreach ($event['attendance_users'] as $attendance) :  ?>
-                    <div><?= $attendance['username'] ?></div>
+                    <div class="participant-<?=$num; ?>" style="display:none"><?= $attendance['username'] ?></div>
                   <?php endforeach ?>
+                  <?php $num++; ?>
                 </div>
                 <form action="" method="POST">
                   <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
