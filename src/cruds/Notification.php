@@ -49,7 +49,7 @@ class Notification
 
   public function get_users_and_event_info_before_day()
   {
-    $stmt = $this->db->query("SELECT users.email email, events.name event_name,
+    $stmt = $this->db->query("SELECT users.email email, users.username username, events.name event_name,
     events.detail detail,
     events.start_at start_at,
     events.end_at end_at FROM users
