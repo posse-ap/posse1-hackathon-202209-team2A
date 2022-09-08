@@ -191,6 +191,35 @@ class User
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->bindValue(':oauth_uid', $oauth_uid, PDO::PARAM_STR);
         $stmt->execute();
+
+        $new_user_id =  $this->db->lastInsertId();
+        $event_ids = $this->get_event_ids();
+        foreach($event_ids as $event_id) {
+            $this->create_association_data($new_user_id, $event_id);
+        }
+
         return $this->get_user_for_github($oauth_uid);
+    }
+
+    private function create_association_data($user_id, $event_id)
+    {
+        $stmt = $this->db->prepare('INSERT INTO event_attendance (user_id, event_id) VALUES(:user_id, :event_id)');
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    private function get_event_ids()
+    {
+        $stmt = $this->db->query('SELECT id FROM events');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    private function get_user_ids()
+    {
+        $stmt = $this->db->query('SELECT id FROM users');
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }

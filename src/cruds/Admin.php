@@ -2,6 +2,7 @@
 
 
 namespace cruds;
+use PDO;
 use modules\Utils;
 
 
@@ -13,7 +14,7 @@ class Admin
         $this->db = $db;
     }
 
-    public function create_event($name, $start_at, $end_at, $detail=null)
+    public function create_event($name, $start_at, $end_at, $detail = null)
     {
         // TODO format input datetime to insert record
         $start_at = Utils::convert_datetime($start_at);
@@ -46,7 +47,13 @@ class Admin
         $stmt->bindValue(':email', $email, \PDO::PARAM_STR);
         $stmt->bindValue(':hashed_password', $hashed_password, \PDO::PARAM_STR);
         $stmt->bindValue(':username', $username, \PDO::PARAM_STR);
-        return $stmt->execute();
+        $success = $stmt->execute();
+        $new_user_id =  $this->db->lastInsertId();
+        $event_ids = $this->get_event_ids();
+        foreach($event_ids as $event_id) {
+            $this->create_association_data($new_user_id, $event_id);
+        }
+        return $success;
     }
 
     public function get_events()
@@ -81,5 +88,27 @@ class Admin
         $stmt->bindValue(':detail', $detail, \PDO::PARAM_STR);
         $stmt->bindValue(':id', $event_id, \PDO::PARAM_STR);
         return $stmt->execute();
+    }
+
+    private function create_association_data($user_id, $event_id)
+    {
+        $stmt = $this->db->prepare('INSERT INTO event_attendance (user_id, event_id) VALUES(:user_id, :event_id)');
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    private function get_event_ids()
+    {
+        $stmt = $this->db->query('SELECT id FROM events');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    private function get_user_ids()
+    {
+        $stmt = $this->db->query('SELECT id FROM users');
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }
