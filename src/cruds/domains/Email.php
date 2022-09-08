@@ -19,7 +19,21 @@ class Email
     詳細：
     ${detail}
 
+    EOT;
+    mb_send_mail($to, $subject, $body, $headers);
+    echo "メールを送信しました";
+  }
 
+  public function send_remind_mail($to,$event,$detail,$start_at,$end_at) {
+    $subject = "イベント未回答通知";
+    $body = "本文";
+    $headers = ["From"=>"system@posse-ap.com", "Content-Type"=>"text/plain; charset=UTF-8", "Content-Transfer-Encoding"=>"8bit"];
+    
+    $body = <<<EOT
+    
+    ${start_at}から${end_at}に${event}を開催します。
+    詳細：
+    ${detail}
     参加／不参加の回答をお願いします。
     http://localhost/auth/login
     EOT;
