@@ -113,8 +113,16 @@ class User
         ");
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
-        $unanswered_events = $stmt->fetchAll();
-        return $unanswered_events;
+        $num = $stmt->rowCount();
+
+        if ($num > 0) {
+            $events = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $row['attendance_users'] = $this->read_attendances($row['event_id']);
+                array_push($events, $row);
+            }
+            return $events;
+        }
     }
     public function update_user_password($email, $new_password)
     {
