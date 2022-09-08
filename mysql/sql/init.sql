@@ -93,13 +93,13 @@ INSERT INTO events SET name='スぺモク', start_at='2022/10/06 10:00', end_at=
 
 
 
-INSERT INTO event_attendance SET event_id=1, user_id=1, is_attendance=true;
-INSERT INTO event_attendance SET event_id=1, user_id=2, is_attendance=true;
-INSERT INTO event_attendance SET event_id=1, user_id=3, is_attendance=true;
-INSERT INTO event_attendance SET event_id=1, user_id=4, is_attendance=false;
-INSERT INTO event_attendance SET event_id=2, user_id=1, is_attendance=true;
-INSERT INTO event_attendance SET event_id=2, user_id=2, is_attendance=false;
-INSERT INTO event_attendance SET event_id=2, user_id=3, is_attendance=false;
+INSERT INTO event_attendance SET event_id=1, user_id=1, is_attendance=1;
+INSERT INTO event_attendance SET event_id=1, user_id=2, is_attendance=1;
+INSERT INTO event_attendance SET event_id=1, user_id=3, is_attendance=1;
+INSERT INTO event_attendance SET event_id=1, user_id=4, is_attendance=0;
+INSERT INTO event_attendance SET event_id=2, user_id=1, is_attendance=1;
+INSERT INTO event_attendance SET event_id=2, user_id=2, is_attendance=0;
+INSERT INTO event_attendance SET event_id=2, user_id=3, is_attendance=0;
 INSERT INTO event_attendance SET event_id=2, user_id=4;
 INSERT INTO event_attendance SET event_id=3, user_id=1;
 INSERT INTO event_attendance SET event_id=3, user_id=2;
@@ -158,14 +158,14 @@ INSERT INTO event_attendance SET event_id=16, user_id=2;
 INSERT INTO event_attendance SET event_id=16, user_id=3;
 INSERT INTO event_attendance SET event_id=16, user_id=4;
 
-INSERT INTO event_attendance SET event_id=17, user_id=1, is_attendance=true;
-INSERT INTO event_attendance SET event_id=17, user_id=2, is_attendance=true;
-INSERT INTO event_attendance SET event_id=17, user_id=3, is_attendance=false;
-INSERT INTO event_attendance SET event_id=17, user_id=4, is_attendance=false;
-INSERT INTO event_attendance SET event_id=18, user_id=1, is_attendance=true;
-INSERT INTO event_attendance SET event_id=18, user_id=2, is_attendance=true;
-INSERT INTO event_attendance SET event_id=18, user_id=3, is_attendance=true;
-INSERT INTO event_attendance SET event_id=18, user_id=4, is_attendance=true;
+INSERT INTO event_attendance SET event_id=17, user_id=1, is_attendance=1;
+INSERT INTO event_attendance SET event_id=17, user_id=2, is_attendance=1;
+INSERT INTO event_attendance SET event_id=17, user_id=3, is_attendance=0;
+INSERT INTO event_attendance SET event_id=17, user_id=4, is_attendance=0;
+INSERT INTO event_attendance SET event_id=18, user_id=1, is_attendance=1;
+INSERT INTO event_attendance SET event_id=18, user_id=2, is_attendance=1;
+INSERT INTO event_attendance SET event_id=18, user_id=3, is_attendance=1;
+INSERT INTO event_attendance SET event_id=18, user_id=4, is_attendance=1;
 INSERT INTO event_attendance SET event_id=19, user_id=1;
 INSERT INTO event_attendance SET event_id=19, user_id=2;
 INSERT INTO event_attendance SET event_id=19, user_id=3;
