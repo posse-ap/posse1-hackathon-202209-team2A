@@ -23,19 +23,6 @@ if (isset($_GET['is_answered'])) {
   $events = $crud->read_unanswered_events($user_id, $is_attendance);
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  if (isset($_REQUEST['is_attendance'])) {
-    $event_id = $_REQUEST['event_id'];
-    $is_attendance = $_REQUEST['is_attendance'];
-
-    $success = $crud->handle_attendance($event_id, $user_id, $is_attendance);
-    if ($success) {
-      header("Location: http://" . $_SERVER['HTTP_HOST'] . '/?is_attendance=' . $is_attendance);
-      exit();
-    }
-  }
-}
-
 include dirname(__FILE__) . '/component/header.php';
 ?>
 <header class="h-16">
@@ -77,7 +64,7 @@ include dirname(__FILE__) . '/component/header.php';
         $end_date = strtotime($event['end_at']);
         $day_of_week = Utils::get_day_of_week(date("w", $start_date));
         ?>
-        <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>">
+        <a class="bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>" href="/attendance.php?event_id=<?= $event['id'] ?>">
           <div>
             <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
             <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
@@ -107,7 +94,7 @@ include dirname(__FILE__) . '/component/header.php';
               <div><?= $attendance['username'] ?></div>
             <?php endforeach ?>
           </div>
-        </div>
+        </a>
         <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
           <div class="modal-overlay absolute w-full h-full bg-black opacity-80"></div>
 
@@ -204,10 +191,6 @@ include dirname(__FILE__) . '/component/header.php';
     </div>
   </div>
 </main>
-
-
-
-
 
 
 <script src="/js/main.js"></script>

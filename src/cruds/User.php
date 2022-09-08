@@ -32,6 +32,21 @@ class User
             return $events;
         }
     }
+
+    public function read_event($event_id)
+    {
+        $stmt = $this->db->prepare("SELECT events.id, events.name, events.start_at, events.end_at,
+        count(event_attendance.id) AS total_participants FROM events
+        LEFT JOIN event_attendance ON events.id = event_attendance.event_id
+        where events.id = :event_id
+        ORDER BY start_at");
+        $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        $row['attendance_users'] = $this->read_attendances($row['event_id']);
+        return $row;
+    }
+
     public function get_user($email)
     {
         $stmt = $this->db->prepare('SELECT * FROM users WHERE users.email=:email');
@@ -59,7 +74,12 @@ class User
 
     public function read_attendance_events($user_id, $is_attendance)
     {
-        $stmt = $this->db->prepare("SELECT * FROM events
+        $stmt = $this->db->prepare("SELECT
+        events.id,
+        events.name,
+        events.start_at,
+        events.end_at
+        FROM events
         INNER JOIN event_attendance ON events.id = event_attendance.event_id
         INNER JOIN users ON users.id = event_attendance.user_id
         where end_at > now()
