@@ -26,7 +26,7 @@ class User
         if ($num > 0) {
             $events = array();
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $row['attendance_users'] = $this->read_attendances($row['event_id']);
+                $row['attendance_users'] = $this->read_attendances($row['id']);
                 array_push($events, $row);
             }
             return $events;
