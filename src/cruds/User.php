@@ -33,14 +33,17 @@ class User
         }
     }
 
-    public function read_event($event_id)
+    public function read_event($event_id, $user_id)
     {
-        $stmt = $this->db->prepare("SELECT events.id, events.name, events.start_at, events.end_at,
-        count(event_attendance.id) AS total_participants FROM events
-        LEFT JOIN event_attendance ON events.id = event_attendance.event_id
-        where events.id = :event_id
-        ORDER BY start_at");
+        $stmt = $this->db->prepare("SELECT events.id id, events.name name, events.start_at start_at, events.end_at end_at,
+        event_attendance.is_attendance is_attendance,
+        count(event_attendance.id) total_participants FROM events
+        INNER JOIN event_attendance ON events.id = event_attendance.event_id
+        where event_attendance.event_id = :event_id AND
+        event_attendance.user_id = :user_id
+        GROUP BY event_attendance.is_attendance");
         $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $row = $stmt->fetch();
         $row['attendance_users'] = $this->read_attendances($row['event_id']);
