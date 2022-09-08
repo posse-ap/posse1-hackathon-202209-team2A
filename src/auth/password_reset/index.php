@@ -1,6 +1,5 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
-
 use modules\auth\User as Auth;
 use cruds\User as Cruds;
 
@@ -10,9 +9,9 @@ $cruds = new Cruds($db);
 $error = '';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-  if(isset($_POST['email']) && isset($_POST['password'])){
-    $login = $auth->login($_POST['email'], $_POST['password']);
-    if($login){
+  if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['new_password'])){
+    $success = $auth->reset_password($_POST['email'], $_POST['password'], $_POST['new_password']);
+    if($success){
       header('Location: http://' . $_SERVER['HTTP_HOST'] . '/index.php');
       exit();
     }else{
@@ -47,19 +46,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <div class="w-full mx-auto py-10 px-5">
       <h2 class="text-md font-bold mb-5">ログイン</h2>
       <form action="" method="POST">
-        <input type="email" placeholder="メールアドレス" class="w-full p-4 text-sm mb-3" name="email">
-        <input type="password" placeholder="パスワード" class="w-full p-4 text-sm mb-3" name="password" value="<?= $_POST['email'] ?>">
+        <input type="email" placeholder="メールアドレス" class="w-full p-4 text-sm mb-3" name="email" value="<?= $_POST['email'] ?>">
+        <input type="password" placeholder="パスワード" class="w-full p-4 text-sm mb-3" name="password">
+        <input type="password" name="new_password" placeholder="新しいパスワード" class="w-full p-4 text-sm mb-3">
         <?php if($error == 'failed'):?>
-          <p>ログイン失敗しました</p>
+          <p>失敗しました</p>
         <?php endif?>
-        <input type="submit" value="ログイン" class="cursor-pointer w-full p-3 text-md text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300">
+        <input type="submit" value="変更" class="cursor-pointer w-full p-3 text-md text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300">
       </form>
-      <div class="text-center text-xs text-gray-400 mt-6">
-        <a href="/auth/login/github.php">Sign In by GitHub</a>
-      </div>
-      <div class="text-center text-xs text-gray-400 mt-6">
-        <a href="/auth/password_reset/index.php">Change your password</a>
-      </div>
     </div>
   </main>
 </body>

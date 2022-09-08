@@ -112,3 +112,14 @@ async function participateEvent(eventId) {
   }
 }
 
+function showParticipants(num){
+  let participants = document.querySelectorAll(`div.participant-${num}`);
+  let numOfParticipants = document.getElementById(`participant-${num}`).textContent;
+  participants.forEach((participant) => {
+    if(participant.style.display == "none"){
+      participant.style.display = "block";
+    }else{
+      participant.style.display = "none";
+    }
+  })
+}
