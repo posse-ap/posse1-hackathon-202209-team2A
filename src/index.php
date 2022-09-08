@@ -25,6 +25,8 @@ if (isset($_GET['page'])) {
   $page = 1;
 }
 
+$loop_num = 1;
+
 include dirname(__FILE__) . '/component/header.php';
 ?>
 <header class="h-16">
@@ -87,10 +89,12 @@ include dirname(__FILE__) . '/component/header.php';
                   -->
               <?php endif; ?>
             </div>
-            <p class="text-sm"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
+            <!-- count($event['attendance_users']) -->
+            <p class="text-sm" id="participant-<?=$loop_num; ?>" onclick="showParticipants(<?=$loop_num; ?>)"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ▷</p>
             <?php foreach ($event['attendance_users'] as $attendance) :  ?>
-              <div><?= $attendance['username'] ?></div>
+              <div class="participant-<?=$loop_num; ?>" style="display:none"><?= $attendance['username'] ?></div>
             <?php endforeach ?>
+            <?php $loop_num++; ?>
           </div>
         </a>
         <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
