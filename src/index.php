@@ -23,9 +23,9 @@ if (isset($_GET['is_answered'])) {
   $events = $crud->read_unanswered_events($user_id, $is_attendance);
 }
 
-if(isset($_GET['page'])){
+if (isset($_GET['page'])) {
   $page = $_GET['page'];
-}else{
+} else {
   $page = 1;
 }
 
@@ -56,17 +56,17 @@ include dirname(__FILE__) . '/component/header.php';
       </div>
     </div>
 
-      <div id="events-list">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-sm font-bold">一覧</h2>
-        </div>
-        <?php foreach (array_slice($events,10*($page-1),10) as $event) : ?>
-          <?php
-          $start_date = strtotime($event['start_at']);
-          $end_date = strtotime($event['end_at']);
-          $day_of_week = Utils::get_day_of_week(date("w", $start_date));
-          ?>
-          <a class="bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>" href="/attendance.php?event_id=<?= $event['id'] ?>">
+    <div id="events-list">
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="text-sm font-bold">一覧</h2>
+      </div>
+      <?php foreach (array_slice($events, 10 * ($page - 1), 10) as $event) : ?>
+        <?php
+        $start_date = strtotime($event['start_at']);
+        $end_date = strtotime($event['end_at']);
+        $day_of_week = Utils::get_day_of_week(date("w", $start_date));
+        ?>
+        <a class="bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>" href="/attendance.php?event_id=<?= $event['id'] ?>">
           <div>
             <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
             <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
@@ -169,20 +169,30 @@ include dirname(__FILE__) . '/component/header.php';
           <a href="#" class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
             <span class="sr-only">Previous</span>
             <!-- Heroicon name: mini/chevron-left -->
-            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <svg class="h-5   -5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
             </svg>
           </a>
-          <?php for($page = 1;$page <= ceil(count($events)/10);$page++) : ?>
-          <a href="<?="index.php?page=" . $page; ?>" class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"><?=$page; ?>
-          <?php endfor; ?>
-          <a href="#" class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
-            <span class="sr-only">Next</span>
-            <!-- Heroicon name: mini/chevron-right -->
-            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-            </svg>
-          </a>
+          <?php for ($page = 1; $page <= ceil(count($events) / 10); $page++) : ?>
+            <?php
+            if (isset($_GET['is_attendance'])) {
+              $paging_href = "index.php?page=" . $page . '&is_attendance=' . $_GET['is_attendance'];
+            } else if (isset($_GET['is_answered'])) {
+              $paging_href = "index.php?page=" . $page . '&is_answered=' . $_GET['is_answered'];
+            } else {
+              $paging_href = "index.php?page=" . $page;
+            }
+            ?>
+            <a href="<?= $paging_href ?>" class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20
+"><?= $page; ?>
+            <?php endfor; ?>
+            <a href="#" class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
+              <span class="sr-only">Next</span>
+              <!-- Heroicon name: mini/chevron-right -->
+              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+              </svg>
+            </a>
         </nav>
       </div>
     </div>
