@@ -28,7 +28,6 @@ if (isset($_GET['eventId'])) {
       'total_participants' => $event['total_participants'],
       'message' => $eventMessage,
       'status' => $status,
-      'deadline' => date("m月d日", strtotime('-3 day', $end_date)),
     ];
     
     echo json_encode($array, JSON_UNESCAPED_UNICODE);

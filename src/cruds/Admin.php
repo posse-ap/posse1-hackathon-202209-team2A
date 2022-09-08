@@ -18,13 +18,11 @@ class Admin
         // TODO format input datetime to insert record
         $start_at = Utils::convert_datetime($start_at);
         $end_at = Utils::convert_datetime($end_at);
-        $dead_line = $start_at;
-        $stmt = $this->db->prepare('INSERT INTO events (name, start_at, end_at, detail, dead_line) VALUES (:name, :start_at, :end_at, :detail, :dead_line)');
+        $stmt = $this->db->prepare('INSERT INTO events (name, start_at, end_at, detail) VALUES (:name, :start_at, :end_at, :detail)');
         $stmt->bindValue(':name', $name, \PDO::PARAM_STR);
         $stmt->bindValue(':start_at', $start_at, \PDO::PARAM_STR);
         $stmt->bindValue(':end_at', $end_at, \PDO::PARAM_STR);
         $stmt->bindValue(':detail', $detail, \PDO::PARAM_STR);
-        $stmt->bindValue(':dead_line', $dead_line, \PDO::PARAM_STR);
         return $stmt->execute();
     }
 
