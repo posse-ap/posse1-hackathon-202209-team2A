@@ -41,7 +41,7 @@ class Slack
         $body = <<<EOT
     @${to}
     @channel
-    ${start_at}から${end_at}に${event}を開催します。
+    ${start_at}から${end_at}に${event}を開催します。未回答の方は期限までに回答をお願いします。
     詳細：
     ${detail}
 
