@@ -239,4 +239,5 @@ INSERT INTO admins SET username='遠藤愛期', email='manakiendou@admin.com', h
 SELECT event_id,events.name,username,start_at FROM users 
 INNER JOIN event_attendance ON users.id = user_id
 INNER JOIN events ON events.id = event_id
-WHERE is_attendance = 2 ORDER BY event_id;
+WHERE start_at > now()
+AND is_attendance = 2 ORDER BY event_id;
