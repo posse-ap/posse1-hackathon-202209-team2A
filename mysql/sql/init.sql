@@ -58,7 +58,7 @@ INSERT INTO users SET username='林千翼子', email='chiyokohayashi@posse.com',
 
 
 INSERT INTO events SET name='縦モク', start_at='2021/08/01 21:00', end_at='2021/08/01 23:00';
-INSERT INTO events SET name='横モク', start_at='2021/08/02 21:00', end_at='2021/08/02 23:00',;
+INSERT INTO events SET name='横モク', start_at='2021/08/02 21:00', end_at='2021/08/02 23:00';
 INSERT INTO events SET name='スペモク', start_at='2021/08/03 20:00', end_at='2021/08/03 22:00';
 INSERT INTO events SET name='縦モク', start_at='2021/08/08 21:00', end_at='2021/08/08 23:00';
 INSERT INTO events SET name='横モク', start_at='2021/08/09 21:00', end_at='2021/08/09 23:00';
@@ -328,9 +328,3 @@ INSERT INTO admins SET username='古屋美羽', email='miuhuruya@admin.com', has
 INSERT INTO admins SET username='松本透歩', email='yukihomatumoto@admin.com', hashed_password=SHA1('matumoto');
 INSERT INTO admins SET username='遠藤愛期', email='manakiendou@admin.com', hashed_password=SHA1('endou');
 
---SQLで未回答者一覧を出力する #30
-SELECT event_id,events.name,username,start_at FROM users 
-INNER JOIN event_attendance ON users.id = user_id
-INNER JOIN events ON events.id = event_id
-WHERE start_at > now()
-AND is_attendance = 2 ORDER BY event_id;
