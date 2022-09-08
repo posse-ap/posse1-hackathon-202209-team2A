@@ -7,37 +7,15 @@ use cruds\Notification;
 
 $mail = new Email;
 $crud = new Notification($db);
-$attendees = $crud -> get_attendee();
-$before_attendance_events = $crud -> before_attendance_event();
-$tomrrow_events = $crud -> tomorrow_event();
-$to = "";
+$attendees = $crud->get_users_and_event_info_before_day();
 
-$before_attendee = array();
-// for($i = 0;$i <=$tomrrow_events[0]['count(*)'];$i++){
-//     $to .= $get_attendees['email'] . ",";
-// };
+
 foreach ($attendees as $attendee) {
-  $event_name = $attendee['name'];
+  $event_name = $attendee['event_name'];
   $email = $attendee['email'];
-  if(array_search($attendee['name'],$before_attendee)==False){
-    $before_attendee[$event_name] = array();
-    array_merge($before_attendee[$event_name],array($event_name=>$email));
-  }else{
-    array_merge($before_attendee[$event_name],array($event_name=>$email));
-  }
+  $detail = $attendee['detail'];
+  $start_at = $attendee['start_at'];
+  $end_at = $attendee['end_at'];
+
+  $mail->send_mail($email, $event_name, $detail, $start_at, $end_at);
 };
-
-// var_dump($before_attendee);
-// print_r($before_attendee);
-
-foreach($before_attendance_events as $before_attendance_event) {
-  $event = $before_attendance_event['name'];
-  $detail = $before_attendance_event['detail'];
-  $start_at = $before_attendance_event['start_at'];
-  $end_at = $before_attendance_event['end_at'];
-  $mail -> send_mail($to,$event,$detail,$start_at,$end_at);
-};
-
-// print_r($get_attendee);
-// print_r($tomrrow_events);
-// echo $tomrrow_events[0]['count(*)'];

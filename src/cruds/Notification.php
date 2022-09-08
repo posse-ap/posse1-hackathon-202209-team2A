@@ -23,10 +23,9 @@ class Notification
     $stmt -> execute();
     return $stmt -> fetchAll();
   }
-<<<<<<< HEAD
 
   public function get_attendee() {
-    $stmt = $this->db ->prepare("SELECT name,email FROM users JOIN event_attendance on users.id = event_attendance.user_id 
+    $stmt = $this->db ->prepare("SELECT name,email FROM users JOIN event_attendance on users.id = event_attendance.user_id
     JOIN events ON event_attendance.event_id = events.id WHERE is_attendance = true and DATE(start_at) = DATE_ADD(CURRENT_DATE, INTERVAL 1 DAY)");
     $stmt -> execute();
     return $stmt -> fetchAll();
@@ -34,8 +33,8 @@ class Notification
 
   //必要？
   public function tomorrow_event() {
-    $stmt = $this->db ->prepare("SELECT event_id,count(*) FROM users JOIN event_attendance on users.id = event_attendance.user_id 
-    JOIN events ON event_attendance.event_id = events.id 
+    $stmt = $this->db ->prepare("SELECT event_id,count(*) FROM users JOIN event_attendance on users.id = event_attendance.user_id
+    JOIN events ON event_attendance.event_id = events.id
     WHERE is_attendance = true and DATE(start_at) = DATE_ADD(CURRENT_DATE, INTERVAL 1 DAY)
     group by event_id");
     $stmt -> execute();
@@ -47,6 +46,17 @@ class Notification
     $stmt -> execute();
     return $stmt -> fetchAll();
   }
-=======
->>>>>>> 56e15cba46cf8d3a839bf43306067d681cefb233
+
+  public function get_users_and_event_info_before_day()
+  {
+    $stmt = $this->db->query("SELECT users.email email, events.name event_name,
+    events.detail detail,
+    events.start_at start_at,
+    events.end_at end_at FROM users
+    INNER JOIN event_attendance ON event_attendance.user_id = users.id
+    INNER JOIN events ON events.id = event_attendance.event_id
+    WHERE event_attendance.is_attendance = TRUE
+    AND DATE(events.start_at) = DATE_ADD(CURRENT_DATE, INTERVAL 1 DAY)");
+    return $stmt->fetchAll();
+  }
 }
