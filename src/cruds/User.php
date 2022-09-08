@@ -88,6 +88,7 @@ class User
         where end_at > now()
         and users.id = :user_id
         and event_attendance.is_attendance = :is_attendance
+        ORDER BY start_at
         ");
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':is_attendance', $is_attendance, PDO::PARAM_INT);
