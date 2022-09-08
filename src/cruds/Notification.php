@@ -41,7 +41,7 @@ class Notification
     return $stmt -> fetchAll();
   }
 
-  public function before_unanswered_event() {
+  public function before_3days_event() {
     $stmt = $this->db ->prepare("SELECT name,detail,start_at,end_at FROM events WHERE DATE(start_at) = DATE_ADD(CURRENT_DATE,INTERVAL 3 DAY)");
     $stmt -> execute();
     return $stmt -> fetchAll();
@@ -57,6 +57,18 @@ class Notification
     INNER JOIN events ON events.id = event_attendance.event_id
     WHERE event_attendance.is_attendance = TRUE
     AND DATE(events.start_at) = DATE_ADD(CURRENT_DATE, INTERVAL 1 DAY)");
+    return $stmt->fetchAll();
+  }
+
+  public function get_unanswerd_3days_before_event()
+  {
+    $stmt = $this->db->query('SELECT users.username username, events.name event_name, events.start_at start_at,
+    events.end_at, events.detail detail FROM users
+    INNER JOIN event_attendance ON event_attendance.user_id = users.id
+    INNER JOIN events ON events.id = event_attendance.event_id
+    WHERE event_attendance.is_attendance = 2
+    AND DATE(events.start_at) = DATE_ADD(CURRENT_DATE, INTERVAL 3 DAY)');
+    $stmt->execute();
     return $stmt->fetchAll();
   }
 }

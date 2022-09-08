@@ -105,7 +105,9 @@ INSERT INTO events SET name='9/14イベント3', start_at='2022/09/14 21:00', en
 INSERT INTO events SET name='9/14イベント4', start_at='2022/09/14 21:00', end_at='2022/12/28 22:00';
 INSERT INTO events SET name='9/14イベント5', start_at='2022/09/14 21:00', end_at='2022/12/28 22:00';
 
-
+INSERT INTO event_attendance SET event_id=27, user_id=1;
+INSERT INTO event_attendance SET event_id=27, user_id=2;
+INSERT INTO event_attendance SET event_id=27, user_id=3;
 
 INSERT INTO event_attendance SET event_id=1, user_id=1, is_attendance=true;
 INSERT INTO event_attendance SET event_id=1, user_id=2, is_attendance=true;
