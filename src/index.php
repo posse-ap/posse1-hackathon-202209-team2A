@@ -12,6 +12,8 @@ $user_id = $_SESSION['user']['id'];
 
 $crud = new Cruds($db);
 
+$events = $crud->read_events();
+
 if (isset($_GET['is_attendance'])) {
   $is_attendance = $_GET['is_attendance'];
   $events = $crud->read_attendance_events($user_id, $is_attendance);
@@ -54,28 +56,25 @@ include dirname(__FILE__) . '/component/header.php';
       </div>
     </div>
 
-
-
-
-    <div id="events-list">
-      <div class="flex justify-between items-center mb-3">
-        <h2 class="text-sm font-bold">一覧</h2>
-      </div>
-
-
-
-
       <div id="events-list">
         <div class="flex justify-between items-center mb-3">
           <h2 class="text-sm font-bold">一覧</h2>
         </div>
-        <?php foreach (array_slice($crud->read_events(),10*($page-1),10) as $event) : ?>
+        <?php foreach (array_slice($events,10*($page-1),10) as $event) : ?>
           <?php
           $start_date = strtotime($event['start_at']);
           $end_date = strtotime($event['end_at']);
           $day_of_week = Utils::get_day_of_week(date("w", $start_date));
           ?>
-          <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>">
+          <a class="bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>" href="/attendance.php?event_id=<?= $event['id'] ?>">
+          <div>
+            <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
+            <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
+            <p class="text-xs text-gray-600">
+              <?php echo date("H:i", $start_date) . "~" . date("H:i", $end_date); ?>
+            </p>
+          </div>
+          <div class="flex flex-col justify-between text-right">
             <div>
               <?php if ($event['id'] % 3 === 1) : ?>
                 <!--
@@ -174,7 +173,7 @@ include dirname(__FILE__) . '/component/header.php';
               <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
             </svg>
           </a>
-          <?php for($page = 1;$page <= ceil($crud->count_event_num()/10);$page++) : ?>
+          <?php for($page = 1;$page <= ceil(count($events)/10);$page++) : ?>
           <a href="<?="index.php?page=" . $page; ?>" class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"><?=$page; ?>
           <?php endfor; ?>
           <a href="#" class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
