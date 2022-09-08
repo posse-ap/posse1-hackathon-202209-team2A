@@ -173,4 +173,9 @@ class User
             return $this->add_attendance($event_id, $user_id, $is_attendance);
         }
     }
+
+    public function check_user_for_github(array $data)
+    {
+        
+    }
 }

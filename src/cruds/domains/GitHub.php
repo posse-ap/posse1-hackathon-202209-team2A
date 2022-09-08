@@ -1,5 +1,6 @@
 <?php
 
+namespace cruds\domains;
 
 class GitHub
 {
