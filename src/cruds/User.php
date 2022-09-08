@@ -90,7 +90,7 @@ class User
         and event_attendance.is_attendance = :is_attendance
         ");
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(':is_attendance', $is_attendance, PDO::PARAM_BOOL);
+        $stmt->bindValue(':is_attendance', $is_attendance, PDO::PARAM_INT);
         $stmt->execute();
         $num = $stmt->rowCount();
 
