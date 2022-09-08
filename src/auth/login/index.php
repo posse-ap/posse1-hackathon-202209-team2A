@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
       <h2 class="text-md font-bold mb-5">ログイン</h2>
       <form action="" method="POST">
         <input type="email" placeholder="メールアドレス" class="w-full p-4 text-sm mb-3" name="email">
-        <input type="password" placeholder="パスワード" class="w-full p-4 text-sm mb-3" name="password" value="<?= $_POST['email'] ?>">>
+        <input type="password" placeholder="パスワード" class="w-full p-4 text-sm mb-3" name="password" value="<?= $_POST['email'] ?>">
         <?php if($error == 'failed'):?>
           <p>ログイン失敗しました</p>
         <?php endif?>
