@@ -32,7 +32,8 @@ $events = $crud->get_events();
         <div class="h-full">
           <img src="/img/header-logo.png" alt="" class="h-full">
         </div>
-        <a href="http://localhost/admin/add_event.php">イベント追加画面</a>
+        <a href="/admin/add_event.php">イベント追加</a>
+        <a href="/admin/add_user.php">ユーザー追加</a>
       </div>
     </header>
 
