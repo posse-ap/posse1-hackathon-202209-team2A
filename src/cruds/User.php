@@ -195,7 +195,7 @@ class User
         $new_user_id =  $this->db->lastInsertId();
         $event_ids = $this->get_event_ids();
         foreach($event_ids as $event_id) {
-            $this->create_association_data($new_user_id, $event_id);
+            $this->create_association_data($new_user_id, $event_id['id']);
         }
 
         return $this->get_user_for_github($oauth_uid);

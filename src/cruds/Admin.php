@@ -19,13 +19,19 @@ class Admin
         $start_at = Utils::convert_datetime($start_at);
         $end_at = Utils::convert_datetime($end_at);
         $dead_line = $start_at;
-        $stmt = $this->db->prepare('INSERT INTO events (name, start_at, end_at, detail, dead_line) VALUES (:name, :start_at, :end_at, :detail, :dead_line)');
+        $stmt = $this->db->prepare('INSERT INTO events (name, start_at, end_at, detail) VALUES (:name, :start_at, :end_at, :detail)');
         $stmt->bindValue(':name', $name, \PDO::PARAM_STR);
         $stmt->bindValue(':start_at', $start_at, \PDO::PARAM_STR);
         $stmt->bindValue(':end_at', $end_at, \PDO::PARAM_STR);
         $stmt->bindValue(':detail', $detail, \PDO::PARAM_STR);
-        $stmt->bindValue(':dead_line', $dead_line, \PDO::PARAM_STR);
-        return $stmt->execute();
+        $success = $stmt->execute();
+
+        $new_event_id = $this->db->lastInsertId();
+        $user_ids = $this->get_user_ids();
+        foreach($user_ids as $user_id) {
+            $this->create_association_data($user_id['id'], $new_event_id);
+        }
+        return $success;
     }
 
     public function get_user($email)
