@@ -18,10 +18,6 @@ if (isset($_GET['is_attendance'])) {
   $is_attendance = $_GET['is_attendance'];
   $events = $crud->read_attendance_events($user_id, $is_attendance);
 }
-if (isset($_GET['is_answered'])) {
-  $is_answered = $_GET['is_answered'];
-  $events = $crud->read_unanswered_events($user_id, $is_attendance);
-}
 
 if (isset($_GET['page'])) {
   $page = $_GET['page'];
@@ -52,7 +48,7 @@ include dirname(__FILE__) . '/component/header.php';
         <a href="index.php" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">全て</a>
         <a href="index.php?is_attendance=1" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">参加</a>
         <a href="index.php?is_attendance=0" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">不参加</a>
-        <a href="index.php?is_answered=1" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a>
+        <a href="index.php?is_attendance=2" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a>
       </div>
     </div>
 
@@ -210,11 +206,7 @@ include dirname(__FILE__) . '/component/header.php';
 
   }
 </script>
-<?php if ($is_answered == '1') { ?>
-  <script>
-    changedButtonColor(3);
-  </script>
-<?php } else if ($is_attendance == '1') { ?>
+<?php if ($is_attendance == '1') { ?>
   <script>
     changedButtonColor(1);
   </script>
@@ -222,13 +214,14 @@ include dirname(__FILE__) . '/component/header.php';
   <script>
     changedButtonColor(2);
   </script>
-<?php } else { ?>
+<?php } else if($is_attendance == '2'){ ?>
+  <script>
+    changedButtonColor(3);
+  </script>
+<?php }else { ?>
   <script>
     changedButtonColor(0);
   </script>
 <?php } ?>
-
-
 </body>
-
 </html>
