@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
       <h2 class="text-md font-bold mb-5">ログイン</h2>
       <form action="" method="POST">
         <input type="email" placeholder="メールアドレス" class="w-full p-4 text-sm mb-3" name="email">
-        <input type="password" placeholder="パスワード" class="w-full p-4 text-sm mb-3" name="password" value="<?= $_POST['email'] ?>">>
+        <input type="password" placeholder="パスワード" class="w-full p-4 text-sm mb-3" name="password" value="<?= $_POST['email'] ?>">
         <?php if($error == 'failed'):?>
           <p>ログイン失敗しました</p>
         <?php endif?>
@@ -56,6 +56,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
       </form>
       <div class="text-center text-xs text-gray-400 mt-6">
         <a href="/auth/login/github.php">Sign In by GitHub</a>
+      </div>
+      <div class="text-center text-xs text-gray-400 mt-6">
+        <a href="/auth/password_reset/index.php">Change your password</a>
       </div>
     </div>
   </main>
