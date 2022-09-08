@@ -174,8 +174,22 @@ class User
         }
     }
 
-    public function check_user_for_github(array $data)
+    public function get_user_for_github($oauth_uid)
     {
+        $stmt = $this->db->prepare('SELECT * FROM users WHERE oauth_uid = :oauth_uid');
 
+        $stmt->bindValue(':oauth_uid', $oauth_uid, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    public function add_user_from_github($username, $email, $oauth_uid)
+    {
+        $stmt = $this->db->prepare("INSERT INTO users (username, email, oauth_uid) VALUES (:username, :email, :oauth_uid)");
+        $stmt->bindValue(':username', $username, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':oauth_uid', $oauth_uid, PDO::PARAM_STR);
+        $stmt->execute();
+        return $this->get_user_for_github($oauth_uid);
     }
 }
