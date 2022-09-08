@@ -17,6 +17,7 @@ services:
   app:
     build: ./php
     container_name: hackathon_phpfpm_dev
+    platform: linux/arm64
     depends_on:
       - db
     volumes:
@@ -27,8 +28,9 @@ services:
     env_file:
       - .env.development
   db:
-    image: mysql:latest
+    image: mysql:8.0
     container_name: hackathon_mysql_dev
+    platform: linux/amd64
     environment:
       TZ: "Asia/Tokyo"
     env_file:
@@ -42,5 +44,6 @@ services:
   mailhog:
     container_name: hackathon_mail_dev
     image: mailhog/mailhog
+    platform: linux/amd64
     ports:
       - "8025:8025"
