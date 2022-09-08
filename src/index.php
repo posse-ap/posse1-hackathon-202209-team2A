@@ -159,11 +159,11 @@ include dirname(__FILE__) . '/component/header.php';
   <!-- ページネーション -->
   <!-- This example requires Tailwind CSS v2.0+ -->
   <div class="flex items-center justify-items-center px-4 py-3 sm:px-6">
-    <div class="flex flex-1 justify-between sm:hidden">
+    <!-- <div class="flex flex-1 justify-between sm:hidden">
       <a href="#" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
       <a href="#" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
-    </div>
-    <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+    </div> -->
+    <div class="sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
         <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
           <a href="#" class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
