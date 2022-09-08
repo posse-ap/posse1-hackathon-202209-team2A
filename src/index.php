@@ -23,7 +23,18 @@ if (isset($_GET['is_answered'])) {
   $events = $crud->read_unanswered_events($user_id, $is_attendance);
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if (isset($_REQUEST['is_attendance'])) {
+    $event_id = $_REQUEST['event_id'];
+    $is_attendance = $_REQUEST['is_attendance'];
 
+    $success = $crud->handle_attendance($event_id, $user_id, $is_attendance);
+    if ($success) {
+      header("Location: http://" . $_SERVER['HTTP_HOST'] . '/?is_attendance=' . $is_attendance);
+      exit();
+    }
+  }
+}
 
 include dirname(__FILE__) . '/component/header.php';
 ?>
@@ -109,35 +120,42 @@ include dirname(__FILE__) . '/component/header.php';
               </div>
 
               <div id="modalInner">
-              <div>
-            <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
-            <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
-            <p class="text-xs text-gray-600">
-              <?php echo date("H:i", $start_date) . "~" . date("H:i", $end_date); ?>
-            </p>
-          </div>
-          <div class="flex flex-col justify-between text-right">
-            <div>
-              <?php if ($event['id'] % 3 === 1) : ?>
-                <!--
+                <div>
+                  <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
+                  <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
+                  <p class="text-xs text-gray-600">
+                    <?php echo date("H:i", $start_date) . "~" . date("H:i", $end_date); ?>
+                  </p>
+                </div>
+                <div class="flex flex-col justify-between text-right">
+                  <div>
+                    <?php if ($event['id'] % 3 === 1) : ?>
+                      <!--
                   <p class="text-sm font-bold text-yellow-400">未回答</p>
                   <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日", strtotime('-3 day', $end_date)); ?></p>
                   -->
-              <?php elseif ($event['id'] % 3 === 2) : ?>
-                <!--
+                    <?php elseif ($event['id'] % 3 === 2) : ?>
+                      <!--
                   <p class="text-sm font-bold text-gray-300">不参加</p>
                   -->
-              <?php else : ?>
-                <!--
+                    <?php else : ?>
+                      <!--
                   <p class="text-sm font-bold text-green-400">参加</p>
                   -->
-              <?php endif; ?>
-            </div>
-            <p class="text-sm"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
-            <?php foreach ($event['attendance_users'] as $attendance) :  ?>
-              <div><?= $attendance['username'] ?></div>
-            <?php endforeach ?>
-          </div>
+                    <?php endif; ?>
+                  </div>
+                  <p class="text-sm"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
+                  <?php foreach ($event['attendance_users'] as $attendance) :  ?>
+                    <div><?= $attendance['username'] ?></div>
+                  <?php endforeach ?>
+                </div>
+                <form action="" method="POST">
+                  <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
+                  <label for="attendance_radio"><input id="attendance_radio" type="radio" value="1" name="is_attendance">参加</label>
+                  <label for="unattendance_radio"><input id="unattendance_radio" type="radio" value="0" name="is_attendance">不参加</label>
+                  <br>
+                  <input type="submit" value="登録" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">
+                </form>
               </div>
 
             </div>
