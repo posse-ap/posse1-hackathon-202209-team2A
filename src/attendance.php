@@ -22,12 +22,12 @@ $event = $crud->read_event($event_id, $user_id);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_REQUEST['is_attendance'])) {
-        $event_id = $_REQUEST['event_id'];
+        $event_id = $_GET['event_id'];
         $is_attendance = $_REQUEST['is_attendance'];
 
         $success = $crud->handle_attendance($event_id, $user_id, $is_attendance);
         if ($success) {
-            header("Location: http://" . $_SERVER['HTTP_HOST'] . '/?is_attendance=' . $is_attendance);
+            header("Location: http://" . $_SERVER['HTTP_HOST'] . '?is_attendance=' . $is_attendance);
             exit();
         }
     }
@@ -124,7 +124,7 @@ include dirname(__FILE__) . '/component/header.php';
             <label for="attendance_radio"><input id="attendance_radio" type="radio" value="1" name="is_attendance" <?php if ($event['is_attendance']) {
                 echo 'disabled';
             } ?>>参加</label>
-            <label for="unattendance_radio"><input id="unattendance_radio" type="radio" value="0" name="is_attendance" <?php if (!$event['is_attendance']) {
+            <label for="unattendance_radio"><input id="unattendance_radio" type="radio" value="0" name="is_attendance" <?php if ($event['is_attendance'] === false) {
                 echo 'disabled';
             } ?>>不参加</label>
             <br>
