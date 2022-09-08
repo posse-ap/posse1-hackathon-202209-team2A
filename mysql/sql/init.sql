@@ -235,4 +235,9 @@ INSERT INTO admins SET username='古屋美羽', email='miuhuruya@admin.com', has
 INSERT INTO admins SET username='松本透歩', email='yukihomatumoto@admin.com', hashed_password=SHA1('matumoto');
 INSERT INTO admins SET username='遠藤愛期', email='manakiendou@admin.com', hashed_password=SHA1('endou');
 
--- sqlで参加者表示
+--SQLで未回答者一覧を出力する #30
+SELECT event_id,events.name,username,start_at FROM users 
+INNER JOIN event_attendance ON users.id = user_id
+INNER JOIN events ON events.id = event_id
+WHERE start_at > now()
+AND is_attendance = 2 ORDER BY event_id;
