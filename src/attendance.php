@@ -33,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+$loop_num = 1;
+
 include dirname(__FILE__) . '/component/header.php';
 ?>
 <header class="h-16">
@@ -70,23 +72,24 @@ include dirname(__FILE__) . '/component/header.php';
                 <div>
                     <?php if ($event['id'] % 3 === 1) : ?>
                         <!--
-                  <p class="text-sm font-bold text-yellow-400">未回答</p>
-                  <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日", strtotime('-3 day', $end_date)); ?></p>
-                  -->
-                    <?php elseif ($event['id'] % 3 === 2) : ?>
-                        <!--
-                  <p class="text-sm font-bold text-gray-300">不参加</p>
-                  -->
-                    <?php else : ?>
-                        <!--
-                  <p class="text-sm font-bold text-green-400">参加</p>
-                  -->
+                    <p class="text-sm font-bold text-yellow-400">未回答</p>
+                    <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日", strtotime('-3 day', $end_date)); ?></p>
+                    -->
+                        <?php elseif ($event['id'] % 3 === 2) : ?>
+                            <!--
+                    <p class="text-sm font-bold text-gray-300">不参加</p>
+                    -->
+                        <?php else : ?>
+                            <!--
+                    <p class="text-sm font-bold text-green-400">参加</p>
+                    -->
                     <?php endif; ?>
                 </div>
-                <p class="text-sm"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
+                <p class="text-sm" id="participant-<?=$loop_num; ?>" onclick="showParticipants(<?=$loop_num; ?>)"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
                 <?php foreach ($event['attendance_users'] as $attendance) :  ?>
-                    <div><?= $attendance['username'] ?></div>
+                    <div class="participant-<?=$loop_num; ?>" style="display:none"><?= $attendance['username'] ?></div>
                 <?php endforeach ?>
+                <?php $loop_num++; ?>
             </div>
         </div>
 
@@ -101,22 +104,22 @@ include dirname(__FILE__) . '/component/header.php';
             <div>
                 <?php if ($event['id'] % 3 === 1) : ?>
                     <!--
-                  <p class="text-sm font-bold text-yellow-400">未回答</p>
-                  <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日", strtotime('-3 day', $end_date)); ?></p>
-                  -->
-                <?php elseif ($event['id'] % 3 === 2) : ?>
-                    <!--
-                  <p class="text-sm font-bold text-gray-300">不参加</p>
-                  -->
-                <?php else : ?>
-                    <!--
-                  <p class="text-sm font-bold text-green-400">参加</p>
-                  -->
+                    <p class="text-sm font-bold text-yellow-400">未回答</p>
+                    <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日", strtotime('-3 day', $end_date)); ?></p>
+                    -->
+                    <?php elseif ($event['id'] % 3 === 2) : ?>
+                        <!--
+                    <p class="text-sm font-bold text-gray-300">不参加</p>
+                    -->
+                    <?php else : ?>
+                        <!--
+                    <p class="text-sm font-bold text-green-400">参加</p>
+                    -->
                 <?php endif; ?>
             </div>
-            <p class="text-sm"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
+            <p class="text-sm" id="participant-<?=$loop_num; ?>" onclick="showParticipants(<?=$loop_num; ?>)"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
             <?php foreach ($event['attendance_users'] as $attendance) :  ?>
-                <div><?= $attendance['username'] ?></div>
+                <div class="participant-<?=$loop_num; ?>" style="display:none"><?= $attendance['username'] ?></div>
             <?php endforeach ?>
         </div>
         <form action="" method="POST">
@@ -133,3 +136,5 @@ include dirname(__FILE__) . '/component/header.php';
     </div>
     </div>
 </main>
+
+<script src="/js/main.js"></script>

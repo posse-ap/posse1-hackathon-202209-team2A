@@ -47,7 +47,7 @@ async function openModal(eventId) {
           <div class="text-center mt-6">
             <!--
             <p class="text-lg font-bold text-yellow-400">未回答</p>
-            <p class="text-xs text-yellow-400">期限 ${event.deadline}</p>
+            <p class="text-xs text-yellow-400">期限 ${event.start_at}</p>
             -->
           </div>
           <div class="flex mt-5">
@@ -112,3 +112,14 @@ async function participateEvent(eventId) {
   }
 }
 
+function showParticipants(num){
+  let participants = document.querySelectorAll(`div.participant-${num}`);
+  let numOfParticipants = document.getElementById(`participant-${num}`).textContent;
+  participants.forEach((participant) => {
+    if(participant.style.display == "none"){
+      participant.style.display = "block";
+    }else{
+      participant.style.display = "none";
+    }
+  })
+}
