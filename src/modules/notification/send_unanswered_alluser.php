@@ -7,12 +7,12 @@ use cruds\Notification;
 
 $mail = new Email;
 $crud = new Notification($db);
-$get_all_users = $crud -> get_all_user();
+$all_users = $crud -> get_all_user();
 $before_unanswered_events = $crud -> before_unanswered_event();
 
 $to = "";
-foreach($get_all_users as $get_all_user) {
-  $to .= $get_all_user['email'] . ",";
+foreach($all_users as $all_user) {
+  $to .= $all_user['email'] . ",";
 };
 foreach($before_unanswered_events as $before_unanswered_event) {
   $event = $before_unanswered_event['name'];

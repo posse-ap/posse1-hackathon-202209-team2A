@@ -7,7 +7,7 @@ use cruds\Notification;
 
 $mail = new Email;
 $crud = new Notification($db);
-$get_attendees = $crud -> get_attendee();
+$attendees = $crud -> get_attendee();
 $before_attendance_events = $crud -> before_attendance_event();
 $tomrrow_events = $crud -> tomorrow_event();
 $to = "";
@@ -16,10 +16,10 @@ $before_attendee = array();
 // for($i = 0;$i <=$tomrrow_events[0]['count(*)'];$i++){
 //     $to .= $get_attendees['email'] . ",";
 // };
-foreach ($get_attendees as $get_attendee) {
-  $event_name = $get_attendee['name'];
-  $email = $get_attendee['email'];
-  if(array_search($get_attendee['name'],$before_attendee)==False){
+foreach ($attendees as $attendee) {
+  $event_name = $attendee['name'];
+  $email = $attendee['email'];
+  if(array_search($attendee['name'],$before_attendee)==False){
     $before_attendee[$event_name] = array();
     array_merge($before_attendee[$event_name],array($event_name=>$email));
   }else{
