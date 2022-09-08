@@ -25,7 +25,7 @@ class Auth
 
     public function validate()
     {
-        if(!isset($this->session)){
+        if(!isset($_SESSION[$this->session]['id'])){
             header("Location: http://" . $_SERVER['HTTP_HOST'] . "/auth/login/" . $this->address);
             exit();
         }
