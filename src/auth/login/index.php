@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 
-use cruds\Notification;
+use cruds\Notification_alluser;
 use modules\auth\User as Auth;
 use cruds\User as Cruds;
 
