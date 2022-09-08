@@ -25,6 +25,9 @@ if (isset($_GET['page'])) {
   $page = 1;
 }
 
+$loop_num = 1;
+$num = 1;
+
 include dirname(__FILE__) . '/component/header.php';
 ?>
 <header class="h-16">
@@ -62,14 +65,14 @@ include dirname(__FILE__) . '/component/header.php';
         $end_date = strtotime($event['end_at']);
         $day_of_week = Utils::get_day_of_week(date("w", $start_date));
         ?>
-        <a class="bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>" href="/attendance.php?event_id=<?= $event['id'] ?>">
-          <div>
+        <div class="bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>">
+          <a href="/attendance.php?event_id=<?= $event['id'] ?>">
             <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
             <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
             <p class="text-xs text-gray-600">
               <?php echo date("H:i", $start_date) . "~" . date("H:i", $end_date); ?>
             </p>
-          </div>
+          </a>
           <div class="flex flex-col justify-between text-right">
             <div>
               <?php if ($event['id'] % 3 === 1) : ?>
@@ -87,12 +90,14 @@ include dirname(__FILE__) . '/component/header.php';
                   -->
               <?php endif; ?>
             </div>
-            <p class="text-sm"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
+            <!-- count($event['attendance_users']) -->
+            <p class="text-sm" id="participant-<?=$loop_num; ?>" onclick="showParticipants(<?=$loop_num; ?>)"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
             <?php foreach ($event['attendance_users'] as $attendance) :  ?>
-              <div><?= $attendance['username'] ?></div>
-            <?php endforeach ?>
+              <div class="participant-<?=$loop_num; ?>" style="display:none"><?= $attendance['username'] ?></div>
+            <?php endforeach; ?>
+            <?php $loop_num++; ?>
           </div>
-        </a>
+        </div>
         <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
           <div class="modal-overlay absolute w-full h-full bg-black opacity-80"></div>
 
@@ -129,10 +134,11 @@ include dirname(__FILE__) . '/component/header.php';
                   -->
                     <?php endif; ?>
                   </div>
-                  <p class="text-sm"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
+                  <p class="text-sm" id="participant-<?=$num; ?>" onclick="showParticipants(<?=$num; ?>)"><span class="text-xl"><?= count($event['attendance_users']) ?></span>人参加 ></p>
                   <?php foreach ($event['attendance_users'] as $attendance) :  ?>
-                    <div><?= $attendance['username'] ?></div>
+                    <div class="participant-<?=$num; ?>" style="display:none"><?= $attendance['username'] ?></div>
                   <?php endforeach ?>
+                  <?php $num++; ?>
                 </div>
                 <form action="" method="POST">
                   <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
