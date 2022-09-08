@@ -69,7 +69,7 @@ class User
         INNER JOIN users as user
             ON event_attendance.user_id = user.id
         WHERE event.id = :event_id
-        AND event_attendance.is_attendance=TRUE");
+        AND event_attendance.is_attendance=1");
         $stmt->bindValue(':event_id', $event_id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
